@@ -1,0 +1,22 @@
+{
+    "sample@hostname": {
+        "class": "ds1820",
+        "config": {
+            "blockGateway": 600,
+            "busmaster": "w1_bus_master1",
+            "devicePackage": "raspberry.onewire",
+            "deviceType": "ds1820",
+            "enable": true,
+            "gateway": "onewire.rasp-heizung",
+            "interval": 60,
+            "name": "sample@hostname",
+            "package": "raspberry.onewire",
+            "path": "/sys/bus/w1/devices/",
+            "timeout": 60,
+            "tolerance": 0.2
+        },
+        "enable": true,
+        "modul": "ds1820",
+        "package": "raspberry.onewire"
+    }
+}

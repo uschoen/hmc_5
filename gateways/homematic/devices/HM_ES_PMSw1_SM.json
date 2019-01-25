@@ -1,0 +1,247 @@
+{
+    "channels": {
+        "0:sticky_unreach": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1548362577
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1548362577
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1548362577
+                }
+            },
+            "name": "0:sticky_unreach",
+            "value": ""
+        },
+        "1:state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "1:state",
+            "value": ""
+        },
+        "1:working": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "1:working",
+            "value": ""
+        },
+        "2:boot": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "2:boot",
+            "value": ""
+        },
+        "2:current": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "2:current",
+            "value": ""
+        },
+        "2:energy_counter": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "2:energy_counter",
+            "value": ""
+        },
+        "2:frequency": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "2:frequency",
+            "value": ""
+        },
+        "2:power": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "2:power",
+            "value": ""
+        },
+        "2:voltage": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "2:voltage",
+            "value": ""
+        }
+    }
+}

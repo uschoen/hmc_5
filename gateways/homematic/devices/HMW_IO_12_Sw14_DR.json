@@ -1,0 +1,139 @@
+{
+    "channels": {
+        "1:state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919579
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919579
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919579
+                }
+            },
+            "name": "1:state",
+            "value": ""
+        },
+        "21:value": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919579
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919579
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919579
+                }
+            },
+            "name": "21:value",
+            "value": ""
+        },
+        "2:state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919579
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919579
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919579
+                }
+            },
+            "name": "2:state",
+            "value": ""
+        },
+        "3:state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547920893
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547920893
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547920893
+                }
+            },
+            "name": "3:state",
+            "value": ""
+        },
+        "6:state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547920893
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547920893
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547920893
+                }
+            },
+            "name": "6:state",
+            "value": ""
+        }
+    }
+}

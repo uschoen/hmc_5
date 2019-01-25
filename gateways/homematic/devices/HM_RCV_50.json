@@ -1,0 +1,31 @@
+{
+    "channels": {
+        "1:press_long": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547996303
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547996303
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547996303
+                }
+            },
+            "name": "1:press_long",
+            "value": ""
+        }
+    }
+}

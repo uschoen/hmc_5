@@ -1,0 +1,24 @@
+{
+    "configuration": {
+        "basePath": "etc",
+        "filePath": "rasp-heizung",
+        "files": {
+            "core": "config.json",
+            "devices": "devices.json",
+            "gateways": "gateways.json",
+            "logger": "logger.json",
+            "module": "module.json",
+            "remoteCore": "remoteCore.json"
+        }
+    },
+    "core": {
+        "daemon": true
+    },
+    "global": {
+        "basePath": "/mnt/nas01/entwicklung/Workspace/hmc_5",
+        "hostName": "rasp-heizung"
+    },
+    "module": {
+        "maxstep": 10
+    }
+}

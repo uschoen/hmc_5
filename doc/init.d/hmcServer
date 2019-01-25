@@ -1,0 +1,42 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides: Python script
+# Required-Start: $local_fs $remote_fs $network $syslog
+# Required-Stop: $local_fs $remote_fs $network $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start Python script at boot time
+# Description: Start Python script at boot tim
+# Version 1.0
+#
+### END INIT INFO
+ 
+DAEMON=/usr/local/bin/hmc/hmcServer.py
+NAME=hmcServer
+HMCUser=hmc
+PIDFILE=/var/run/$NAME.pid
+ 
+#test -x $DAEMON || exit 0
+ 
+. /lib/lsb/init-functions
+ 
+case "$1" in
+ start)
+   log_daemon_msg "Starting system $DAEMON_NAME daemon"
+   start-stop-daemon --user $HMCUser --start --background --pidfile $PIDFILE --make-pidfile --exec /usr/bin/python3 $DAEMON & 
+   log_end_msg $?
+   ;;
+ stop)
+   echo -n "Stopping daemon: "$NAME
+   start-stop-daemon --user $HMCUser --stop --oknodo --retry 30 --pidfile $PIDFILE
+   ;;
+ restart)
+   start-stop-daemon --user $HMCUser --stop --oknodo --retry 30 --pidfile $PIDFILE
+   start-stop-daemon --user $HMCUser --start --pidfile $PIDFILE --exec $DAEMON
+   ;;
+ *)
+   echo "Usage: $NAME {start|stop|restart}" >&2
+   exit 3
+   ;;
+esac
+exit 0

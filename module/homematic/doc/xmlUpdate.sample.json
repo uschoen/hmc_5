@@ -1,0 +1,15 @@
+{
+    "sample@hostname": {
+        "caller": "update",
+        "class": "HMupdate",
+        "config": {
+        	"hmHost":"http://127.0.0.1",
+            "url":"/config/xmlapi/statechange.cgi"
+        },
+        "enable": true,
+        "modul": "xmlUpdater",
+        "modulName": "sample@hostname",
+        "package": "homematic",
+        "runnable": false
+    }
+}

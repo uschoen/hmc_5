@@ -1,0 +1,374 @@
+{
+    "28-0115913432ff@onewire.rasp-heizung": {
+        "channels": {
+            "temperature": {
+                "enable": true,
+                "events": {
+                    "onchange": {
+                        "module": [
+                            "dataMapper@rasp-heizung"
+                        ],
+                        "timestamp": 1545341741
+                    },
+                    "oncreate": {
+                        "module": [],
+                        "timestamp": 1545157423
+                    },
+                    "oncreatechannel": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "ondelete": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "onrefresh": {
+                        "module": [],
+                        "timestamp": 1545157224
+                    }
+                },
+                "name": "28-011591355eff",
+                "value": 28.75
+            }
+        },
+        "device": {
+            "deviceID": "28-0115913432ff@onewire.rasp-heizung",
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1545341742
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1545157423
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1545157224
+                }
+            },
+            "name": "28-0115913432ff",
+            "package": "raspberry.onewire",
+            "type": "ds1820"
+        }
+    },
+    "28-011591355eff@onewire.rasp-heizung": {
+        "channels": {
+            "temperature": {
+                "enable": true,
+                "events": {
+                    "onchange": {
+                        "module": [
+                            "dataMapper@rasp-heizung"
+                        ],
+                        "timestamp": 1545342132
+                    },
+                    "oncreate": {
+                        "module": [],
+                        "timestamp": 1545157423
+                    },
+                    "oncreatechannel": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "ondelete": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "onrefresh": {
+                        "module": [],
+                        "timestamp": 1545157224
+                    }
+                },
+                "name": "28-011591355eff",
+                "value": 28.31
+            }
+        },
+        "device": {
+            "deviceID": "28-011591355eff@onewire.rasp-heizung",
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1545342132
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1545157423
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1545157224
+                }
+            },
+            "name": "28-011591355eff",
+            "package": "raspberry.onewire",
+            "type": "ds1820"
+        }
+    },
+    "28-011591363eff@onewire.rasp-heizung": {
+        "channels": {
+            "temperature": {
+                "enable": true,
+                "events": {
+                    "onchange": {
+                        "module": [
+                            "dataMapper@rasp-heizung"
+                        ],
+                        "timestamp": 1545342651
+                    },
+                    "oncreate": {
+                        "module": [],
+                        "timestamp": 1545157423
+                    },
+                    "oncreatechannel": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "ondelete": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "onrefresh": {
+                        "module": [],
+                        "timestamp": 1545157224
+                    }
+                },
+                "name": "28-011591355eff",
+                "value": 42.75
+            }
+        },
+        "device": {
+            "deviceID": "28-011591363eff@onewire.rasp-heizung",
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1545342651
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1545157423
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1545157224
+                }
+            },
+            "name": "28-011591363eff",
+            "package": "raspberry.onewire",
+            "type": "ds1820"
+        }
+    },
+    "28-0115913679ff@onewire.rasp-heizung": {
+        "channels": {
+            "temperature": {
+                "enable": true,
+                "events": {
+                    "onchange": {
+                        "module": [
+                            "dataMapper@rasp-heizung"
+                        ],
+                        "timestamp": 1545342655
+                    },
+                    "oncreate": {
+                        "module": [],
+                        "timestamp": 1545157424
+                    },
+                    "oncreatechannel": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "ondelete": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "onrefresh": {
+                        "module": [],
+                        "timestamp": 1545157224
+                    }
+                },
+                "name": "28-011591355eff",
+                "value": 26.44
+            }
+        },
+        "device": {
+            "deviceID": "28-0115913679ff@onewire.rasp-heizung",
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1545342655
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1545157424
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1545157224
+                }
+            },
+            "name": "28-0115913679ff",
+            "package": "raspberry.onewire",
+            "type": "ds1820"
+        }
+    },
+    "28-011591382fff@onewire.rasp-heizung": {
+        "channels": {
+            "temperature": {
+                "enable": true,
+                "events": {
+                    "onchange": {
+                        "module": [
+                            "dataMapper@rasp-heizung"
+                        ],
+                        "timestamp": 1545342261
+                    },
+                    "oncreate": {
+                        "module": [],
+                        "timestamp": 1545157423
+                    },
+                    "oncreatechannel": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "ondelete": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "onrefresh": {
+                        "module": [],
+                        "timestamp": 1545157224
+                    }
+                },
+                "name": "28-011591355eff",
+                "value": 28.25
+            }
+        },
+        "device": {
+            "deviceID": "28-011591382fff@onewire.rasp-heizung",
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1545342261
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1545157423
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1545157224
+                }
+            },
+            "name": "28-011591382fff",
+            "package": "raspberry.onewire",
+            "type": "ds1820"
+        }
+    },
+    "28-0315911b36ff@onewire.rasp-heizung": {
+        "channels": {
+            "temperature": {
+                "enable": true,
+                "events": {
+                    "onchange": {
+                        "module": [
+                            "dataMapper@rasp-heizung"
+                        ],
+                        "timestamp": 1545342723
+                    },
+                    "oncreate": {
+                        "module": [],
+                        "timestamp": 1545157423
+                    },
+                    "oncreatechannel": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "ondelete": {
+                        "module": [],
+                        "timestamp": 0
+                    },
+                    "onrefresh": {
+                        "module": [],
+                        "timestamp": 1545157224
+                    }
+                },
+                "name": "28-011591355eff",
+                "value": 50.38
+            }
+        },
+        "device": {
+            "deviceID": "28-0315911b36ff@onewire.rasp-heizung",
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1545342723
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1545157423
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1545157224
+                }
+            },
+            "name": "28-0315911b36ff",
+            "package": "raspberry.onewire",
+            "type": "ds1820"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "configuration": {
+        "basePath": "etc", 
+        "filePath": "default", 
+        "files": {
+            "core": "config.json", 
+            "devices": "devices.json", 
+            "gateways": "gateways.json", 
+            "logger": "logger.json", 
+            "module": "module.json", 
+            "remoteCore": "remoteCore.json"
+        }
+    }, 
+    "core": {
+        "daemon": true
+    }
+}

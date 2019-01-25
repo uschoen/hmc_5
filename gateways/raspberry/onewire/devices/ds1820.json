@@ -1,0 +1,31 @@
+{
+    "channels": {
+        "temperature": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1545157224
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1545157224
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1545157224
+                }
+            },
+            "name": "28-011591355eff",
+            "value": 0
+        }
+    }
+}

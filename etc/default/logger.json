@@ -1,0 +1,33 @@
+{   
+	"disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(name)30s - %(lineno)d - %(levelname)s - %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+            "level": "DEBUG",
+            "stream": "ext://sys.stdout"
+        },
+        "warning_handler": {
+            "backupCount": 5,
+            "class": "logging.handlers.RotatingFileHandler",
+            "encoding": "utf8",
+            "filename": "/usr/local/bin/hmc/log/deafult-warning.log",
+            "formatter": "simple",
+            "level": "ERROR",
+            "maxBytes": 12000,
+            "mode": "a"
+        }
+    },
+    "root": {
+        "handlers": [
+            "warning_handler"
+        ],
+        "level": "WARNING"
+    },
+    "version": 1
+}

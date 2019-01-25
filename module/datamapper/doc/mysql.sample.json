@@ -1,0 +1,26 @@
+{
+    "sample@hostname": {
+        "caller": "update",
+        "class": "mysqlManager",
+        "config": {
+            "db": "hmc",
+            "host": "127.0.0.1",
+            "mapping": {
+                "channel": "getChannel",
+                "deviceID": "getDeviceID",
+                "timestamp": "getTimestamp",
+                "value": "getValue"
+            },
+            "modulName": "sample@hostname",
+            "password": "password",
+            "port": 3306,
+            "table": "statistic",
+            "user": "hmc"
+        },
+        "enable": true,
+        "modul": "mysql",
+        "modulName": "sample@hostname",
+        "package": "datamapper",
+        "runnable": false
+    }
+}

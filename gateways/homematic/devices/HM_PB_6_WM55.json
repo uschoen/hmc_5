@@ -1,0 +1,166 @@
+{
+    "channels": {
+        "3:install_test": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "3:install_test",
+            "value": ""
+        },
+        "3:press_short": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "3:press_short",
+            "value": ""
+        },
+        "4:install_test": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "4:install_test",
+            "value": ""
+        },
+        "4:press_short": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "4:press_short",
+            "value": ""
+        },
+        "5:install_test": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "5:install_test",
+            "value": ""
+        },
+        "5:press_short": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1547919585
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1547919585
+                }
+            },
+            "name": "5:press_short",
+            "value": ""
+        }
+    }
+}
