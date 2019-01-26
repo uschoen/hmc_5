@@ -28,14 +28,14 @@ class plain(object):
             serialData=cPickle.dumps(var)
             return serialData
         except:
-            raise cryptException("can't serial data")
+            raise cryptException("can't serial data",False)
     
     def unSerialData(self,serialData):
         try:
             unSerialData=cPickle.loads(serialData)
             return unSerialData 
         except:
-            raise cryptException("can't unserial data")
+            raise cryptException("can't unserial data",False)
         
     def decrypt(self,cryptstring,key=""):
         '''
@@ -48,7 +48,7 @@ class plain(object):
         except (cryptException) as e:
             raise e
         except:
-            raise cryptException( "can not decrypt message")
+            raise cryptException( "can not decrypt message",False)
             
     
     def encrypt(self,var,key=""):
@@ -62,7 +62,7 @@ class plain(object):
         except (cryptException) as e:
             raise e
         except:
-            raise cryptException( "can not encrypt message")
+            raise cryptException( "can not encrypt message",False)
         
     
         
