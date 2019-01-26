@@ -20,7 +20,6 @@ class modul():
     
     def __init__(self,*args):
         self.module={}
-        self.moduleCFG={}
         self.logger.info("load core.module modul")
     
     def getModulConfiguration(self,objectID) :
@@ -64,8 +63,10 @@ class modul():
         try:
             self.logger.debug("restore modul %s"%(objectID))
             if objectID in self.module:
+                if self.module[objectID]['config']==modulCFG:
+                    LOG.info("current module %s confiuration is equal new configuration"%(objectID))
+                    return
                 self._deleteModule(objectID) 
-            self.moduleCFG[objectID]=modulCFG
             self.__buildModul(objectID,modulCFG)
             self.__startModul(objectID)
         except coreModuleException as e:
@@ -82,7 +83,6 @@ class modul():
                 self.logger.info("%s modul is not exists and can't delete"%(objectID))
                 return
             del (self.module[objectID])
-            del (self.moduleCFG[objectID])
             self.logger.info("delete %s modul from core"%(objectID)) 
         except:
             raise coreModuleException("unknown error in deleteModul")
@@ -92,9 +92,10 @@ class modul():
         call module on this host
         if modul not on this host it will be ignored
         '''
+        
         try:
             for modulName in modulList:
-                if modulName not in self.moduleCFG:
+                if modulName not in self.module:
                     self.logger.error("modul %s does not exiting"%(modulName))
                     continue
                 if self.ifonThisHost(modulName):
@@ -123,17 +124,18 @@ class modul():
         method_to_call = getattr(self.module[modulName]['instance'], self.module[modulName]['caller'])
         method_to_call(args)
         
-    def __buildModul(self,modulName,modulCFG):
+    def __buildModul(self,objectID,modulCFG):
         try:
             modulPackage="module.%s.%s"%(modulCFG.get('package'),modulCFG.get('modul'))
             classModul = self.__loadPackage(modulPackage)
-            self.module[modulName]={
-                                    'name':modulName,
+            self.module[objectID]={
+                                    'name':objectID,
                                     'status':"stop",
                                     'runnable':modulCFG.get('runnable',False),
                                     'enable':modulCFG.get('enable',False),
                                     'instance':False,
-                                    'caller':modulCFG.get('caller',None)
+                                    'caller':modulCFG.get('caller',None),
+                                    'config':modulCFG
                                     }
             if hasattr(classModul, '__version__'):
                 if classModul.__version__<__version__:
@@ -144,11 +146,11 @@ class modul():
                 self.logger.warning("modul %s has no version Info"%(modulPackage))
             className = modulCFG.get('class')
             defaultCFG=modulCFG.get("config",{})
-            defaultCFG['modulName']=modulName
-            argumente=(modulName,defaultCFG,self)
-            self.module[modulName]['instance']= getattr(classModul,className)(*argumente)
-            if not hasattr(self.module[modulName]['instance'], self.module[modulName]['caller']):
-                raise coreModuleException("modul %s has no caller %s"%(modulName,self.module[modulName]['caller']))
+            defaultCFG['modulName']=objectID
+            argumente=(objectID,defaultCFG,self)
+            self.module[objectID]['instance']= getattr(classModul,className)(*argumente)
+            if not hasattr(self.module[objectID]['instance'], self.module[objectID]['caller']):
+                raise coreModuleException("modul %s has no caller %s"%(objectID,self.module[objectID]['caller']))
         except coreModuleException as e:
             raise e
         except:
@@ -162,34 +164,34 @@ class modul():
         except:
             raise coreModuleException("can't not __loadPackage %s"%(modulPackage)) 
     
-    def __disableModul(self,modulName):
+    def __disableModul(self,objectID):
         '''
         disable module only on this host
         '''
-        self.logger.info("disable modul %s"%(modulName))
-        if modulName not in self.module:
-            raise coreModuleException("modul %s is not existing"%(modulName))
-        self.module[modulName]['enable']=False
+        self.logger.info("disable modul %s"%(objectID))
+        if objectID not in self.module:
+            raise coreModuleException("modul %s is not existing"%(objectID))
+        self.module[objectID]['enable']=False
     
-    def __startModul(self,modulName):
+    def __startModul(self,objectID):
         '''
         start only module on this host
         '''
+        if objectID not in self.module:
+            raise coreModuleException("modul %s is not existing"%(objectID))
+        if not self.module[objectID]['enable']:
+            raise coreModuleException("module %s is not enable"%(objectID)) 
         try:
-            if  not self.module[modulName]['runnable']:
+            if  not self.module[objectID]['runnable']:
                 return
-            if modulName not in self.module:
-                raise coreModuleException("modul %s is not existing"%(modulName))
-            if not self.module[modulName]['enable']:
-                raise coreModuleException("module %s is not enable"%(modulName)) 
             try:
-                self.logger.info("start modul %s"%(modulName))
-                self.module[modulName]['instance'].start()
-                self.module[modulName]['status']="start"
+                self.logger.info("start modul %s"%(objectID))
+                self.module[objectID]['instance'].start()
+                self.module[objectID]['status']="start"
             except:
-                self.module[modulName]['status']="stop"
-                self.__disableModul(modulName)
-                raise coreModuleException("can not start modul %s"%(modulName))
+                self.module[objectID]['status']="stop"
+                self.__disableModul(objectID)
+                raise coreModuleException("can not start modul %s"%(objectID))
         except coreModuleException as e:
             raise e
         except:
@@ -239,17 +241,20 @@ class modul():
         
         if 0 module in core configuration, no file written 
         '''
+        if fileNameABS==None:
+            raise coreModuleException("no filename given to save module file")    
         try:
-            if fileNameABS==None:
-                raise coreModuleException("no filename given to save module file")
             if objectID==None:
                 objectID="module@%s"%(self.host)
             if self.ifonThisHost(objectID):
-                if len(self.moduleCFG)==0:
+                if len(self.module)==0:
                     self.logger.info("can't write module configuration, lenght is 0")
                     return
                 self.logger.info("save module file %s"%(fileNameABS))
-                self.writeJSON(fileNameABS,self.moduleCFG)
+                moduleCFG={}
+                for modulName in self.module:
+                    moduleCFG[modulName]=self.module[modulName]['config']
+                self.writeJSON(fileNameABS,moduleCFG)
             else:
                 self.updateRemoteCore(forceUpdate,objectID,'writeModuleConfiguration',objectID,fileNameABS)     
         except (coreException,coreModuleException) as e:
