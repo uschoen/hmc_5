@@ -41,7 +41,6 @@ class plain(object):
         decrypt/entschluesseln a string
         '''
         try:
-            self.logger.info("use no (plaintext) decryption")
             plaintext=cryptstring
             var=self.unSerialData(plaintext)
             return var
@@ -56,7 +55,6 @@ class plain(object):
         encrypt/verschluesseln a var
         '''
         try:
-            self.logger.info("use no (plaintext) encryption")
             plaintext=self.serialData(var)   
             string=plaintext
             return string
