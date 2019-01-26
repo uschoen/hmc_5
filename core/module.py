@@ -42,7 +42,7 @@ class modul():
         '''
         try:
             self.logger.debug("restore modul %s"%(objectID))
-            if objectID not in self.module:
+            if objectID in self.module:
                 self._deleteModule(objectID) 
             self.moduleCFG[objectID]=modulCFG
             self.__buildModul(objectID,modulCFG)
