@@ -23,6 +23,12 @@ class modul():
         self.moduleCFG={}
         self.logger.info("load core.module modul")
     
+    def getAllModulNames(self):
+        try:
+            return list(self.module.keys())
+        except:
+            raise coreModuleException("can not getAllModulNames back")
+    
     def restoreModul(self,modulName,modulCFG,forceUpdate=False):
         '''
         restore a modul, only for restart/start
