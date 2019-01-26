@@ -51,8 +51,7 @@ class coreProtokol1():
                         'setDeviceChannelValue',
                         'restoreCoreClient',
                         'restoreGateway',
-                        'addDeviceChannel',
-                        'restoreModul'}
+                        'addDeviceChannel'}
         
         ''' network socket '''
         self.__networkSocket=False

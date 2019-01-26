@@ -1,0 +1,50 @@
+{
+    "disable_existing_loggers": false,
+    "formatters": {
+        "console": {
+            "datefmt": "%H:%M:%S.",
+            "format": "%(asctime)06s%(msecs)03d - %(name)30s - %(lineno)d- %(process)d - %(levelname)s - %(message)s"
+        },
+        "simple": {
+            "datefmt": "%H:%M:%S.",
+            "format": "%(asctime)06s%(msecs)03d - %(name)30s - %(lineno)d- %(process)d - %(levelname)s - %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+            "level": "INFO",
+            "stream": "ext://sys.stdout"
+        },
+        "debug_handler": {
+            "backupCount": 0,
+            "class": "logging.handlers.RotatingFileHandler",
+            "encoding": "utf8",
+            "filename": "log/ras_heizung_debug.log",
+            "formatter": "simple",
+            "level": "DEBUG",
+            "maxBytes": 0,
+            "mode": "w"
+        },
+        "error_handler": {
+            "backupCount": 0,
+            "class": "logging.handlers.RotatingFileHandler",
+            "encoding": "utf8",
+            "filename": "log/rasp_heizung_error.log",
+            "formatter": "simple",
+            "level": "ERROR",
+            "maxBytes": 0,
+            "mode": "w"
+        }
+    },
+    "root": {
+        "handlers": [
+            "console",
+            "debug_handler",
+            "error_handler"
+        ],
+        "level": "DEBUG"
+    },
+    "version": 1
+}
