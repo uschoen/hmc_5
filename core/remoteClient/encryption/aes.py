@@ -48,7 +48,7 @@ class aes(object):
             serialData=cPickle.dumps(var)
             return serialData
         except:
-            raise cryptException("can't serial data")
+            raise cryptException("can't serial data",False)
     
     def unSerialData(self,serialData):
         '''
@@ -58,7 +58,7 @@ class aes(object):
             unSerialData=cPickle.loads(serialData)
             return unSerialData 
         except:
-            raise cryptException("can't unserial data")
+            raise cryptException("can't unserial data",False)
         
     def decrypt(self,cryptstring,key):
         '''
@@ -70,7 +70,7 @@ class aes(object):
             var=self.unSerialData(plaintext)
             return var
         except:
-            raise cryptException( "can not decrypt message")
+            raise cryptException( "can not decrypt message",False)
             
     
     def encrypt(self,var,key):
@@ -83,7 +83,7 @@ class aes(object):
             string=self.__encrypt(plaintext, key)
             return string
         except:
-            raise cryptException( "can not encrypt message")
+            raise cryptException( "can not encrypt message",False)
         
     def __formatKey(self,key):
         '''
