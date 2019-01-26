@@ -168,4 +168,15 @@ class base():
             pythonFile.close()
         except:
             pass
-            
+     
+    def checkModulVersion(self,package,module,modulVersion=__version__):
+        try:
+            if hasattr(module, '__version__'):
+                if module.__version__<modulVersion:
+                    LOG.warning("version of %s is %s and can by to low"%(package,module.__version__))
+                else:
+                    LOG.debug( "version of %s is %s"%(package,module.__version__))
+            else:
+                LOG.warning("modul %s has no version Info"%(package))
+        except:
+            LOG.critical("can't check modul version")   
