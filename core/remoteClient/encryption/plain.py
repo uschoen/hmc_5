@@ -13,11 +13,12 @@ import logging
 # Local application imports
 from ..exceptions import cryptException
 
+LOG=logging.getLogger(__name__)
+
 class plain(object):
     
     def __init__(self):
-        self.logger=logging.getLogger(__name__)  
-        self.logger.debug("build plain encryption")
+        LOG.debug("build plain encryption")
 
     def serialData(self,var):
         '''
