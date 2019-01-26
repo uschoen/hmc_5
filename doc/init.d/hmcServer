@@ -31,7 +31,7 @@ case "$1" in
    start-stop-daemon --user $HMCUser --stop --oknodo --retry 30 --pidfile $PIDFILE
    ;;
  restart)
-   start-stop-daemon --user root --stop --oknodo --retry 30 --pidfile $PIDFILE
+   start-stop-daemon --user $HMCUser --stop --oknodo --retry 30 --pidfile $PIDFILE
    start-stop-daemon --user $HMCUser --start --pidfile $PIDFILE --exec $DAEMON
    ;;
  *)
