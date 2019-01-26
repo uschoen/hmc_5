@@ -86,7 +86,7 @@ class ds1820(defaultGateway):
                                 try:
                                     if not self.running:
                                         break
-                                    self.__readSenors(sensorID)
+                                    self.__readSensors(sensorID)
                                 except:
                                     self.__connectedSensors[sensorID]["connected"]=False
                                     LOG.error("can not read/update sensorID %s, disable sensor"%(sensorID))
@@ -101,7 +101,7 @@ class ds1820(defaultGateway):
         except:
             LOG.error("some error in raspberry onewire gateway. gateway stop")
     
-    def __readSenors(self,sensorID):
+    def __readSensors(self,sensorID):
         try:
             deviceID=self.__deviceID(sensorID)
             '''
@@ -131,12 +131,12 @@ class ds1820(defaultGateway):
             '''   
             LOG.debug("read sensorID %s"%(sensorID))
             path=self.config["path"]+sensorID+"/w1_slave"
-            self.__updateSensorID(sensorID,self.__readSensor(path))
-        except (Exception) as e:
+            self.__updateSensorID(sensorID,self.__readSensorValue(path))
+        except:
             self.__connectedSensors[sensorID]["connected"]=False
             LOG.error("can not read/update sensorID %s, disable senor"%(sensorID))
             
-    def __readSensor(self,path):
+    def __readSensorValue(self,path):
         '''
         read Sensor
         '''
