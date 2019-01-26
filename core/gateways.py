@@ -366,10 +366,13 @@ class gateways():
             CLASS_NAME = gatewayCFG.get('class')
             ARGUMENTS = (gatewayCFG.get('config',{}),self)
             module = importlib.import_module(package)
-            if module.__version__<__version__:
-                LOG.warning("version of %s is %s and can by to low"%(package,module.__version__))
+            if hasattr(module, '__version__'):
+                if module.__version__<__version__:
+                    LOG.warning("version of %s is %s and can by to low"%(package,module.__version__))
+                else:
+                    LOG.debug( "version of %s is %s"%(package,module.__version__))
             else:
-                LOG.debug( "version of %s is %s"%(package,module.__version__))
+                LOG.warning("modul %s has no version Info"%(package))
             self.gateways[objectID]['instance'] = getattr(module, CLASS_NAME)(*ARGUMENTS)
             self.gateways[objectID]['instance'].daemon = True 
         except:
