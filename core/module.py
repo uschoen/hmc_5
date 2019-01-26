@@ -169,9 +169,9 @@ class modul():
             self.logger.debug("try to bild gateway instance: %s  with package: %s"%(objectID,package))
             ARGUMENTS = (objectID,modulCFG.get('config',{}),self)
             module = importlib.import_module(package)
+            self.checkModulVersion(package,module)
             self.module[objectID]['instance'] = getattr(module, CLASS_NAME)(*ARGUMENTS)
             self.module[objectID]['instance'].daemon = True 
-            self.checkModulVersion(package,self.module[objectID]['instance'])
             if not hasattr(self.module[objectID]['instance'],modulCFG.get('caller')):
                 raise coreModuleException("modul %s has no caller %s"%(objectID,modulCFG.get('caller')),False)
         except (coreModuleException) as e:

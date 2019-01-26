@@ -366,9 +366,9 @@ class gateways():
             CLASS_NAME = gatewayCFG.get('class')
             ARGUMENTS = (gatewayCFG.get('config',{}),self)
             module = importlib.import_module(package)
+            self.checkModulVersion(package,module)
             self.gateways[objectID]['instance'] = getattr(module, CLASS_NAME)(*ARGUMENTS)
             self.gateways[objectID]['instance'].daemon = True 
-            self.checkModulVersion(package,self.gateways[objectID]['instance'])
         except:
             self.gateways[objectID]['enable']=False
             raise coreGatewayException("can't build gateway instance %s"(objectID))
