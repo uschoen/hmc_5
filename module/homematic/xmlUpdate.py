@@ -20,6 +20,7 @@ import xmltodict                                     #@UnresolvedImport,@UnusedI
 import logging
 # Local application imports
 
+LOG=logging.getLogger(__name__) 
 
 class HMupdater(object):
     '''
@@ -36,9 +37,8 @@ class HMupdater(object):
             "url":"/config/xmlapi/statechange.cgi"
              }
         self.__config.update(modulCFG)
-        
-        self.__log=logging.getLogger(__name__) 
-        self.__log.debug("debug  %s instance"%(__name__))
+
+        LOG.debug("debug  %s instance"%(__name__))
     
     def update(self,args):
         '''
@@ -51,40 +51,40 @@ class HMupdater(object):
         try:
             deviceID=args.get('deviceID',"unkown")
             channelName=args.get('channelName',"unkown")
-            self.__log.debug("callback from device id %s to update Homematic"%(deviceID))
+            LOG.debug("callback from device id %s to update Homematic"%(deviceID))
             try:
                 if not "iseID" in self.core.getAllDeviceChannelAttribute(deviceID,channelName):
-                    self.__log.error("device id %s has no attribut iseID"%(deviceID))
+                    LOG.error("device id %s has no attribut iseID"%(deviceID))
                     return
             except:
-                self.__log.error("device id %s has no iseID parameter"%(deviceID),exc_info=True)
+                LOG.error("device id %s has no iseID parameter"%(deviceID),exc_info=True)
                 return
             iseID=self.core.getDeviceChannelAttributValue(deviceID,channelName,'iseID')
             url=("%s%s?ise_id=%s&new_value=%s"%(self.__config['hmHost'],self.__config['url'],iseID,self.core.getDeviceChannelValue(deviceID,channelName)))
-            self.__log.debug("url is %s "%(url))
+            LOG.debug("url is %s "%(url))
             http = urllib3.PoolManager()
             response = http.request('GET', url)
-            self.__log.debug("http response code %s:"%(response.data))
+            LOG.debug("http response code %s:"%(response.data))
             httpStatus=response.status
             if  httpStatus != 200:
-                self.__log.error("get html error '%s'"%(httpStatus)) 
+                LOG.error("get html error '%s'"%(httpStatus)) 
                 return
             HMresponse=xmltodict.parse(response.data)
             if "result" in HMresponse:
                 if "changed" in HMresponse['result']: 
-                    self.__log.debug("value successful change")
+                    LOG.debug("value successful change")
                 elif "not_found" in HMresponse['result']: 
-                    self.__log.error("can not found iseID %s"%(iseID))
+                    LOG.error("can not found iseID %s"%(iseID))
                 else:
-                    self.__log.warning("get some unkown answer %s"%(response.data))
+                    LOG.warning("get some unkown answer %s"%(response.data))
             else:
-                self.__log.warning("get some unkown answer %s"%(response.data)) 
+                LOG.warning("get some unkown answer %s"%(response.data)) 
         except urllib3.URLError:
-            self.__log.error("get some error at url request")
+            LOG.error("get some error at url request")
         except ValueError:
-            self.__log.error("some error at request, check configuration")
+            LOG.error("some error at request, check configuration")
         except :
-            self.__log.emergency("somthing going wrong !!!")            
+            LOG.emergency("somthing going wrong !!!")            
                 
 '''
 <_H_Boden_Ruecklauf enable="true" ise_id="29680" sensor_id="28-011591355eff"></_H_Boden_Ruecklauf>
