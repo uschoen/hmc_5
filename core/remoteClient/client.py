@@ -169,7 +169,7 @@ class coreClient(threading.Thread):
         '''
             unblock connection to client
         ''' 
-        self.logger.info("inblock core client %s"%(self.__hostName))
+        self.logger.info("unblock core client %s"%(self.__hostName))
         self.__clientBlocked=0
     
     def setSyncStatus(self):
