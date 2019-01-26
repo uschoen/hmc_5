@@ -29,7 +29,7 @@ from base64 import b64encode
 # Local application imports
 from ..exceptions import cryptException
 
-
+LOG=logging.getLogger(__name__)
 BS = 16
 pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS) 
 unpad = lambda s : s[0:-ord(s[-1])]
@@ -37,8 +37,8 @@ unpad = lambda s : s[0:-ord(s[-1])]
 class aes(object):
     
     def __init__(self):
-        self.logger=logging.getLogger(__name__)  
-        self.logger.debug("build aes encryption")
+          
+        LOG.debug("build aes encryption")
 
     def serialData(self,var):
         '''
@@ -65,7 +65,7 @@ class aes(object):
         decrypt/entschluesseln a string
         '''
         try:
-            self.logger.info("use AES decryption")
+            LOG.info("use AES decryption")
             plaintext=self.__decrypt(cryptstring,key)
             var=self.unSerialData(plaintext)
             return var
@@ -78,7 +78,7 @@ class aes(object):
         encrypt/verschluesseln a var
         '''
         try:
-            self.logger.info("use AES encryption")
+            LOG.info("use AES encryption")
             plaintext=self.serialData(var)   
             string=self.__encrypt(plaintext, key)
             return string
