@@ -22,6 +22,8 @@ except:
 import time
 
 # Local apllication constant
+LOG=logging.getLogger(__name__)
+
 
 class mysqlManager(object):
     '''
@@ -46,7 +48,6 @@ class mysqlManager(object):
         Constructor
         '''
         try:
-            self.__log=logging.getLogger(__name__) 
             self.core=core
             self.config={
                             'modulName':modulName,
@@ -67,7 +68,7 @@ class mysqlManager(object):
                 }
             self.config.update(modulCFG)
             self.__dbConnection=False
-            self.__log.info("build mysqlMapper modul:%s"%(modulName))
+            LOG.info("build mysqlMapper modul:%s"%(modulName))
         except:
             raise coreModuleException("can't build modul %s"%(modulName))
     def __getTimestamp(self):
@@ -94,21 +95,21 @@ class mysqlManager(object):
             if self.callerARGS['deviceID']==None:
                 raise coreModuleException("no device ID given")
             if self.callerARGS['channelName']=="device":
-                self.__log.debug("ignore update , deviceID %s, is device channel"%(self.callerARGS['deviceID']))
+                LOG.debug("ignore update , deviceID %s, is device channel"%(self.callerARGS['deviceID']))
                 return
-            self.__log.debug("call update from deviceID %s channel:%s "%(self.callerARGS['deviceID'],self.callerARGS['deviceID']))   
+            LOG.debug("call update from deviceID %s channel:%s "%(self.callerARGS['deviceID'],self.callerARGS['deviceID']))   
             sql=self.__buildSQL()
             if not self.__dbConnection:
                 self.__dbConnect()
             self.__insert(sql)
         except:
-            self.__log.error("some error in modul")
+            LOG.error("some error in modul")
             self.__dbClose()
     
     def __insert(self,sql):
         try:
             
-            self.__log.info("insert : %s"%(sql))
+            LOG.debug("insert : %s"%(sql))
             cur = self.__dbConnection.cursor()
             cur.execute(sql)
             self.__dbConnection.commit()  
@@ -119,10 +120,10 @@ class mysqlManager(object):
     
     def shutdown(self):
         try:
-            self.__log.critical("shutdown mysql modul")   
+            LOG.critical("shutdown mysql modul")   
             self.__dbClose()  
         except:
-            self.__log.error("some error to shutdown mysql connctor")   
+            LOG.error("some error to shutdown mysql connctor")   
                   
     def __buildSQL(self):
         try:
@@ -137,7 +138,7 @@ class mysqlManager(object):
                 fieldstring+=("`%s`"%(key))
                 valuestring+=("'%s'"%(self.mappers[self.config['mapping'][key]]()))
             sql=("INSERT INTO %s (%s) VALUES (%s);"%(self.config['table'],fieldstring,valuestring))
-            self.__log.debug("build sql string:%s"%(sql))
+            LOG.debug("build sql string:%s"%(sql))
             return sql
         except coreModuleException as e: 
             raise e
@@ -147,13 +148,13 @@ class mysqlManager(object):
     def __dbClose(self):
         try:
             if self.__dbConnection:
-                self.__log.info("close database")
+                LOG.info("close database")
                 self.__dbConnection.close()
         except:
-            self.__log.error("can't close db connection")
+            LOG.error("can't close db connection")
             
     def __dbConnect(self):
-        self.__log.info("try connect to host:%s:%s with user:%s table:%s"%(self.config['host'],self.config['port'],self.config['user'],self.config['db']))
+        LOG.info("try connect to host:%s:%s with user:%s table:%s"%(self.config['host'],self.config['port'],self.config['user'],self.config['db']))
         try:
             self.__dbConnection = mysql.connector.connect(
                                                   host=self.config['host'],
@@ -166,9 +167,9 @@ class mysqlManager(object):
             #self.__dbConnection.threadsafety = 3
             #self.__dbConnection.paramstyle = "format" 
             #self.__dbConnection.autocommit=True
-            self.__log.info("connect succecfull")
+            LOG.info("connect succecfull")
         except (mysql.connector.Error) as e:
             self.__dbConnection=False
-            self.__log.error("can't not connect to database: %s"%(e))
+            LOG.error("can't not connect to database: %s"%(e))
             self.__dbClose()  
             raise e
