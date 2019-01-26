@@ -151,6 +151,9 @@ class gateways():
         try:
             LOG.info("restore gateway %s"%(objectID))
             if objectID in self.gateways:
+                if gatewayCFG==self.gateways[object]['config']:
+                    LOG.info("gateway %s have the same configuration, do not restore")
+                    return
                 self.__deleteGateway(objectID)
             self.__buildGateway(objectID,deepcopy(gatewayCFG))
             if self.ifonThisHost(objectID):
