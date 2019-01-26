@@ -58,7 +58,7 @@ class modul():
         '''
         try:
             if objectID not in self.module:
-                self.logger.error("%s modul is not exists and can't delete"%(objectID))
+                self.logger.info("%s modul is not exists and can't delete"%(objectID))
                 return
             del (self.module[objectID])
             del (self.moduleCFG[objectID])
