@@ -13,11 +13,12 @@ import logging
 # Local application imports
 from ..exceptions import cryptException
 
+LOG=logging.getLogger(__name__)
+
 class plain(object):
     
     def __init__(self):
-        self.logger=logging.getLogger(__name__)  
-        self.logger.debug("build plain encryption")
+        LOG.debug("build plain encryption")
 
     def serialData(self,var):
         '''
@@ -27,28 +28,27 @@ class plain(object):
             serialData=cPickle.dumps(var)
             return serialData
         except:
-            raise cryptException("can't serial data")
+            raise cryptException("can't serial data",False)
     
     def unSerialData(self,serialData):
         try:
             unSerialData=cPickle.loads(serialData)
             return unSerialData 
         except:
-            raise cryptException("can't unserial data")
+            raise cryptException("can't unserial data",False)
         
     def decrypt(self,cryptstring,key=""):
         '''
         decrypt/entschluesseln a string
         '''
         try:
-            self.logger.info("use no (plaintext) decryption")
             plaintext=cryptstring
             var=self.unSerialData(plaintext)
             return var
         except (cryptException) as e:
             raise e
         except:
-            raise cryptException( "can not decrypt message")
+            raise cryptException( "can not decrypt message",False)
             
     
     def encrypt(self,var,key=""):
@@ -56,14 +56,13 @@ class plain(object):
         encrypt/verschluesseln a var
         '''
         try:
-            self.logger.info("use no (plaintext) encryption")
             plaintext=self.serialData(var)   
             string=plaintext
             return string
         except (cryptException) as e:
             raise e
         except:
-            raise cryptException( "can not encrypt message")
+            raise cryptException( "can not encrypt message",False)
         
     
         

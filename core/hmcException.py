@@ -78,28 +78,38 @@ class coreDeviceException(Exception):
         self.logger=logging.getLogger(__name__)
         super(coreDeviceException, self).__init__(msg)
         self.msg = msg
-        
-        self.logger.critical(msg,exc_info=True)
+        if tracback:
+            self.logger.critical(msg,exc_info=True)
+        else:
+            self.logger.critical(msg)
   
 
 class coreChannelException(Exception):
-    def __init__(self, msg="unkown error occured"):
+    def __init__(self, msg="unkown error occured",tracback=True):
         self.logger=logging.getLogger(__name__)
         super(coreChannelException, self).__init__(msg)
         self.msg = msg
-        
-        self.logger.critical(msg,exc_info=True)
+        if tracback:
+            self.logger.critical(msg,exc_info=True)
+        else:
+            self.logger.critical(msg)
 
 class coreModuleException(Exception):
-    def __init__(self, msg="unkown error occured"):
+    def __init__(self, msg="unkown error occured",tracback=True):
         self.logger=logging.getLogger(__name__)
         super(coreModuleException, self).__init__(msg)
         self.msg = msg
-        self.logger.critical(msg,exc_info=True)
+        if tracback:
+            self.logger.critical(msg,exc_info=True)
+        else:
+            self.logger.critical(msg)
 
 class cryptException(Exception):
-    def __init__(self, msg="unkown error occured"):
+    def __init__(self, msg="unkown error occured",tracback=True):
         self.logger=logging.getLogger(__name__)
         super(cryptException, self).__init__(msg)
         self.msg = msg
-        self.logger.critical(msg,exc_info=True)
+        if tracback:
+            self.logger.critical(msg,exc_info=True)
+        else:
+            self.logger.critical(msg)

@@ -11,58 +11,81 @@ __author__ = 'ullrich schoen'
 # Standard library imports
 import importlib
 import threading
+import logging
 # Local application imports
 from .hmcException import coreModuleException,coreException
 
 # Local apllication constant
+LOG=logging.getLogger(__name__)
+
 
 class modul():
     
     def __init__(self,*args):
         self.module={}
-        self.moduleCFG={}
-        self.logger.info("load core.module modul")
+        LOG.info("load core.module modul")
+    
+    def getModulConfiguration(self,objectID) :
+        '''
+        get the gateways configuration back
+        exception:
+                coreGatewayExecption
+        '''
+        if objectID not in self.module:
+            raise coreModuleException("gateway %s ist not exists"%(objectID))
+        try:
+            return self.module[objectID]['config']
+        except (coreModuleException) as e:
+            raise e
+        except:
+            raise coreModuleException("can't not read modulConfiguration objectID %s"%(objectID))
+        
+    def getAllModulNames(self):
+        try:
+            return list(self.module.keys())
+        except:
+            raise coreModuleException("can not getAllModulNames back")
     
     def restoreModul(self,modulName,modulCFG,forceUpdate=False):
         '''
         restore a modul, only for restart/start
         '''
         try:
-            if self.ifonThisHost(modulName):
-                self._restoreModul(modulName, modulCFG)
+            self.__restoreModul(modulName, modulCFG)
             self.updateRemoteCore(forceUpdate,modulName,'restoreModul',modulName,modulCFG)
         except (coreModuleException) as e:
             raise e
         except:
             raise coreModuleException("unknown error in restoreModul")
         
-    def _restoreModul(self,objectID,modulCFG):
+    def __restoreModul(self,objectID,modulCFG):
         '''
         restore a modul, only for restart/start
         '''
         try:
-            self.logger.debug("restore modul %s"%(objectID))
-            if objectID not in self.module:
-                self._deleteModule(objectID) 
-            self.moduleCFG[objectID]=modulCFG
+            LOG.debug("restore modul %s"%(objectID))
+            if objectID in self.module:
+                if self.module[objectID]['config']==modulCFG:
+                    LOG.info("current module %s confiuration is equal new configuration"%(objectID))
+                    return
+                self.__deleteModule(objectID) 
             self.__buildModul(objectID,modulCFG)
             self.__startModul(objectID)
-        except coreModuleException as e:
+        except (coreModuleException) as e:
             raise e
         except:
             raise coreModuleException("unknown error in restoreModul")
     
-    def _deleteModule(self,objectID):
+    def __deleteModule(self,objectID):
         '''
         delete a module
         '''
         try:
             if objectID not in self.module:
-                self.logger.error("%s modul is not exists and can't delete"%(objectID))
+                LOG.info("%s modul is not exists and can't delete"%(objectID))
                 return
             del (self.module[objectID])
-            del (self.moduleCFG[objectID])
-            self.logger.info("delete %s modul from core"%(objectID)) 
+            LOG.info("delete %s modul from core"%(objectID)) 
         except:
             raise coreModuleException("unknown error in deleteModul")
     
@@ -71,17 +94,18 @@ class modul():
         call module on this host
         if modul not on this host it will be ignored
         '''
+        
         try:
             for modulName in modulList:
-                if modulName not in self.moduleCFG:
-                    self.logger.error("modul %s does not exiting"%(modulName))
+                if modulName not in self.module:
+                    LOG.error("modul %s does not exiting"%(modulName))
                     continue
                 if self.ifonThisHost(modulName):
                     if modulName not in self.module:
-                        self.logger.error("modul %s have no instance"%(modulName))
+                        LOG.error("modul %s have no instance"%(modulName))
                         continue
                     if not self.module[modulName]['enable']:
-                        self.logger.warning("modul %s is diable"%(modulName))
+                        LOG.warning("modul %s is diable"%(modulName))
                         continue
                     try:
                         deviceData={
@@ -92,9 +116,9 @@ class modul():
                         deviceData.update(args)
                         threading.Thread(target=self.__startModulThread,args = (modulName,deviceData)).start()
                     except:
-                        self.logger.error("can't start modul %s"%(modulName)) 
+                        LOG.error("can't start modul %s"%(modulName)) 
                 else:
-                    self.logger.info("modul %s not on this host %s"%(modulName,self.host)) 
+                    LOG.info("modul %s not on this host %s"%(modulName,self.host)) 
         except:
             raise coreModuleException("unknown error in callModul")    
     
@@ -102,73 +126,88 @@ class modul():
         method_to_call = getattr(self.module[modulName]['instance'], self.module[modulName]['caller'])
         method_to_call(args)
         
-    def __buildModul(self,modulName,modulCFG):
+    def __buildModul(self,objectID,modulCFG):
+        if objectID in self.module:
+            raise coreModuleException("gateway %s exists"%(objectID))
         try:
-            modulPackage="module.%s.%s"%(modulCFG.get('package'),modulCFG.get('modul'))
-            classModul = self.__loadPackage(modulPackage)
-            self.module[modulName]={
-                                    'name':modulName,
+            LOG.info("build modul %s"%(objectID))
+            defaultModulCFG={ 
+                        "enable":False,
+                        "package":"unkown",
+                        "modul":"unkown",
+                        "class":"unkown",
+                        "config":{}
+                        }
+            defaultModulCFG.update(modulCFG)
+            self.module[objectID]={
+                                    'name':objectID,
                                     'status':"stop",
-                                    'runnable':modulCFG.get('runnable',False),
-                                    'enable':modulCFG.get('enable',False),
+                                    'runnable':defaultModulCFG.get('runnable',False),
+                                    'enable':defaultModulCFG.get('enable',False),
                                     'instance':False,
-                                    'caller':modulCFG.get('caller',None)
+                                    'caller':defaultModulCFG.get('caller'),
+                                    'config':defaultModulCFG
                                     }
-            if hasattr(classModul, '__version__'):
-                if classModul.__version__<__version__:
-                    self.logger.warning("version of %s is %s and can by to low"%(modulPackage,classModul.__version__))
-                else:
-                    self.logger.debug( "version of %s is %s"%(modulPackage,classModul.__version__))
-            else:
-                self.logger.warning("modul %s has no version Info"%(modulPackage))
-            className = modulCFG.get('class')
-            defaultCFG=modulCFG.get("config",{})
-            defaultCFG['modulName']=modulName
-            argumente=(modulName,defaultCFG,self)
-            self.module[modulName]['instance']= getattr(classModul,className)(*argumente)
-            if not hasattr(self.module[modulName]['instance'], self.module[modulName]['caller']):
-                raise coreModuleException("modul %s has no caller %s"%(modulName,self.module[modulName]['caller']))
-        except coreModuleException as e:
+            if self.ifonThisHost(objectID):
+                try:
+                    self.__buildModulInstance(objectID,defaultModulCFG)
+                except (coreModuleException) as e:
+                    raise e
+        except (coreModuleException) as e:
+            self.module[objectID]['instance']=False
+            self.module[objectID]['enable']=False
             raise e
         except:
+            self.module[objectID]['instance']=False
+            self.module[objectID]['enable']=False
             raise coreModuleException("unkown error in build modul")  
     
-    def __loadPackage(self,modulPackage):
+    def __buildModulInstance(self,objectID,modulCFG):
         try:
-            classModul = importlib.import_module(modulPackage)
-            self.logger.info("load pakage %s"%(modulPackage))
-            return classModul
+            package="module.%s.%s"%(modulCFG.get('package'),modulCFG.get('modul'))
+            CLASS_NAME = modulCFG.get('class')
+            self.logger.debug("try to bild gateway instance: %s  with package: %s"%(objectID,package))
+            ARGUMENTS = (objectID,modulCFG.get('config',{}),self)
+            module = importlib.import_module(package)
+            self.checkModulVersion(package,module)
+            self.module[objectID]['instance'] = getattr(module, CLASS_NAME)(*ARGUMENTS)
+            self.module[objectID]['instance'].daemon = True 
+            if not hasattr(self.module[objectID]['instance'],modulCFG.get('caller')):
+                raise coreModuleException("modul %s has no caller %s"%(objectID,modulCFG.get('caller')),False)
+        except (coreModuleException) as e:
+            raise e        
         except:
-            raise coreModuleException("can't not __loadPackage %s"%(modulPackage)) 
+            self.module[objectID]['enable']=False
+            raise coreModuleException("can't build gateway instance %s"(objectID))
     
-    def __disableModul(self,modulName):
+    def __disableModul(self,objectID):
         '''
         disable module only on this host
         '''
-        self.logger.info("disable modul %s"%(modulName))
-        if modulName not in self.module:
-            raise coreModuleException("modul %s is not existing"%(modulName))
-        self.module[modulName]['enable']=False
+        LOG.info("disable modul %s"%(objectID))
+        if objectID not in self.module:
+            raise coreModuleException("modul %s is not existing"%(objectID))
+        self.module[objectID]['enable']=False
     
-    def __startModul(self,modulName):
+    def __startModul(self,objectID):
         '''
         start only module on this host
         '''
+        if objectID not in self.module:
+            raise coreModuleException("modul %s is not existing"%(objectID))
+        if not self.module[objectID]['enable']:
+            raise coreModuleException("module %s is not enable"%(objectID)) 
         try:
-            if  not self.module[modulName]['runnable']:
+            if  not self.module[objectID]['runnable']:
                 return
-            if modulName not in self.module:
-                raise coreModuleException("modul %s is not existing"%(modulName))
-            if not self.module[modulName]['enable']:
-                raise coreModuleException("module %s is not enable"%(modulName)) 
             try:
-                self.logger.info("start modul %s"%(modulName))
-                self.module[modulName]['instance'].start()
-                self.module[modulName]['status']="start"
+                LOG.info("start modul %s"%(objectID))
+                self.module[objectID]['instance'].start()
+                self.module[objectID]['status']="start"
             except:
-                self.module[modulName]['status']="stop"
-                self.__disableModul(modulName)
-                raise coreModuleException("can not start modul %s"%(modulName))
+                self.module[objectID]['status']="stop"
+                self.__disableModul(objectID)
+                raise coreModuleException("can not start modul %s"%(objectID))
         except coreModuleException as e:
             raise e
         except:
@@ -194,15 +233,15 @@ class modul():
                 if not self.ifFileExists(fileNameABS):
                     raise coreModuleException("file %s not found"%(fileNameABS))
                 moduleCFG=self.loadJSON(fileNameABS=fileNameABS)
-                self.logger.info("load module file %s"%(fileNameABS))
+                LOG.info("load module file %s"%(fileNameABS))
                 if len(moduleCFG)==0:
-                    self.logger.info("module file is empty")
+                    LOG.info("module file is empty")
                     return
                 for modulName in moduleCFG:
                     try:
                         self.restoreModul(modulName,moduleCFG[modulName])
                     except:
-                        self.logger.critical("unkown error:can't restore module name: %s"(modulName)) 
+                        LOG.critical("unkown error:can't restore module name: %s"(modulName)) 
             else:
                 self.updateRemoteCore(forcedUpdate,objectID,'loadModuleConfiguration',objectID,fileNameABS) 
         except (coreModuleException,coreException) as e:
@@ -218,17 +257,20 @@ class modul():
         
         if 0 module in core configuration, no file written 
         '''
+        if fileNameABS==None:
+            raise coreModuleException("no filename given to save module file")    
         try:
-            if fileNameABS==None:
-                raise coreModuleException("no filename given to save module file")
             if objectID==None:
                 objectID="module@%s"%(self.host)
             if self.ifonThisHost(objectID):
-                if len(self.moduleCFG)==0:
-                    self.logger.info("can't write module configuration, lenght is 0")
+                if len(self.module)==0:
+                    LOG.info("can't write module configuration, lenght is 0")
                     return
-                self.logger.info("save module file %s"%(fileNameABS))
-                self.writeJSON(fileNameABS,self.moduleCFG)
+                LOG.info("save module file %s"%(fileNameABS))
+                moduleCFG={}
+                for modulName in self.module:
+                    moduleCFG[modulName]=self.module[modulName]['config']
+                self.writeJSON(fileNameABS,moduleCFG)
             else:
                 self.updateRemoteCore(forceUpdate,objectID,'writeModuleConfiguration',objectID,fileNameABS)     
         except (coreException,coreModuleException) as e:
