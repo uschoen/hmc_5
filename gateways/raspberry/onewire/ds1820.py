@@ -13,10 +13,14 @@ import os
 import time
 import re
 import copy
+import logging
 
 # Local application imports
 from core.hmcException import gatewayException
 from gateways.hmc.defaultGateway import defaultGateway
+
+LOG=logging.getLogger(__name__)
+
 
 class ds1820(defaultGateway):
     '''
@@ -45,7 +49,7 @@ class ds1820(defaultGateway):
         # last time read sensors
         self.__LastReadSenors=0
         
-        self.log.info("build ds1820 gateway, %s instance"%(__name__))
+        LOG.info("build ds1820 gateway, %s instance"%(__name__))
     
     def defaultDeviceConfig(self,sensorID):
         '''
@@ -71,7 +75,7 @@ class ds1820(defaultGateway):
     '''    
     def run(self):
         try:
-            self.log.debug("ds1820 gateway start")
+            LOG.debug("ds1820 gateway start")
             while self.running:
                 try:
                     if self.__LastReadSenors<time.time():
@@ -85,17 +89,17 @@ class ds1820(defaultGateway):
                                     self.__readSenors(sensorID)
                                 except:
                                     self.__connectedSensors[sensorID]["connected"]=False
-                                    self.log.error("can not read/update sensorID %s, disable sensor"%(sensorID))
+                                    LOG.error("can not read/update sensorID %s, disable sensor"%(sensorID))
                             self.__LastReadSenors=int(time.time())+self.config.get("interval",360)
                     time.sleep(0.5)
                 except:
-                    self.log.critical("can't check onewire bus")
+                    LOG.critical("can't check onewire bus")
                     self.__blockGateway()
-            self.log.warning("ds1820 gateway stop")
+            LOG.warning("ds1820 gateway stop")
         except gatewayException as e:
             raise e        
         except:
-            self.log.error("some error in raspberry onewire gateway. gateway stop")
+            LOG.error("some error in raspberry onewire gateway. gateway stop")
     
     def __readSenors(self,sensorID):
         try:
@@ -104,7 +108,7 @@ class ds1820(defaultGateway):
             check if sensor connected to onewire bus
             '''                    
             if  self.__connectedSensors[sensorID]["connected"]==False:
-                self.log.info("sensor id %s is disconnected"%(sensorID))
+                LOG.info("sensor id %s is disconnected"%(sensorID))
                 return
                 '''
             check if sensor in core exists
@@ -115,7 +119,7 @@ class ds1820(defaultGateway):
             check if sensor enable in core
             '''
             if not self.core.ifDeviceIDenable(deviceID):
-                self.log.info("sensor id %s is disabled"%(sensorID))
+                LOG.info("sensor id %s is disabled"%(sensorID))
                 return 
             '''
             check if sensor channel in device
@@ -125,12 +129,12 @@ class ds1820(defaultGateway):
             '''
             read temperature from sensor
             '''   
-            self.log.debug("read sensorID %s"%(sensorID))
+            LOG.debug("read sensorID %s"%(sensorID))
             path=self.config["path"]+sensorID+"/w1_slave"
             self.__updateSensorID(sensorID,self.__readSensor(path))
         except (Exception) as e:
             self.__connectedSensors[sensorID]["connected"]=False
-            self.log.error("can not read/update sensorID %s, disable senor"%(sensorID),exc_info=True)
+            LOG.error("can not read/update sensorID %s, disable senor"%(sensorID),exc_info=True)
             
     def __readSensor(self,path):
         '''
@@ -166,14 +170,14 @@ class ds1820(defaultGateway):
             lastValue=self.core.getDeviceChannelValue(deviceID,'temperature')
             
             tempDiv=float(self.config["tolerance"])
-            self.log.debug("sensorID:%s old value:%s new value:%s tolerance:%s"%(sensorID,lastValue,value,tempDiv))
+            LOG.debug("sensorID:%s old value:%s new value:%s tolerance:%s"%(sensorID,lastValue,value,tempDiv))
             
             if (lastValue < (value-tempDiv)) or (lastValue >(value+tempDiv)):
-                self.log.debug("temperature is change, update device channel temperature") 
+                LOG.debug("temperature is change, update device channel temperature") 
                 self.core.setDeviceChannelValue(deviceID=deviceID,channelName="temperature",value=value)
-                self.log.debug("update for deviceID %s success"%(deviceID))                                   
+                LOG.debug("update for deviceID %s success"%(deviceID))                                   
             else:
-                self.log.debug("temperature is not change")
+                LOG.debug("temperature is not change")
         except:    
             raise gatewayException("can not update sensorID %s"%(sensorID)) 
     
@@ -184,12 +188,12 @@ class ds1820(defaultGateway):
         add them to core
         '''
         try:
-            self.log.debug("check connected sensors")
+            LOG.debug("check connected sensors")
             self.__disableAllSensor()
             sensorList =os.listdir(self.config["path"])
-            self.log.debug("read connected sensors in path %s"%(sensorList))
+            LOG.debug("read connected sensors in path %s"%(sensorList))
             for sensorID in sensorList:
-                self.log.debug("found sensorID %s"%(sensorID))
+                LOG.debug("found sensorID %s"%(sensorID))
                 if sensorID==self.config["busmaster"]:  continue
                 if sensorID in self.__connectedSensors:
                     self.__connectedSensors[sensorID]["connected"]=True
@@ -197,7 +201,7 @@ class ds1820(defaultGateway):
                     try:
                         self.__addNewDevice(sensorID)
                     except:
-                        self.log.error("can not add new sensorID %s"%(sensorID),exc_info=True)
+                        LOG.error("can not add new sensorID %s"%(sensorID),exc_info=True)
             self.__deleteDisconectedSensors()
         except:
             raise gatewayException("can't not check connectedt senors")
@@ -214,7 +218,7 @@ class ds1820(defaultGateway):
             deviceID=self.__deviceID(sensorID)
             channelCFG=self.defaultChannelConfig(sensorID=sensorID)
             self.addNewDeviceChannel(deviceID,"temperature",channelCFG)
-            self.log.debug("add new channel %s to deviceID %s"%("temperature",deviceID))
+            LOG.debug("add new channel %s to deviceID %s"%("temperature",deviceID))
         except:
             self.__connectedSensors[sensorID]={
                                                 "connected":False
@@ -229,7 +233,7 @@ class ds1820(defaultGateway):
         try:
             deviceConfig=self.defaultDeviceConfig(sensorID)
             self.addNewDevice(self.__deviceID(sensorID),deviceConfig)
-            self.log.debug("add new sensorID %s with deviceID %s and type %s"%(sensorID,self.__deviceID(sensorID),self.config['deviceType']))
+            LOG.debug("add new sensorID %s with deviceID %s and type %s"%(sensorID,self.__deviceID(sensorID),self.config['deviceType']))
             self.__connectedSensors[sensorID]={
                                                 "connected":True
                                                 }
@@ -244,7 +248,7 @@ class ds1820(defaultGateway):
         '''
         disable all gateways sensors 
         '''
-        self.log.debug("set all sensor value connect to false")
+        LOG.debug("set all sensor value connect to false")
         for sensorID in self.__connectedSensors:
             self.__connectedSensors[sensorID]["connected"]=False
     
@@ -253,14 +257,14 @@ class ds1820(defaultGateway):
         delete disconnected sensor from gateways list
         '''
         try:
-            self.log.debug("clear up and delete disconnected sensor")
+            LOG.debug("clear up and delete disconnected sensor")
             senors=copy.deepcopy(self.__connectedSensors)
             for sensorID in senors:
                 if self.__connectedSensors[sensorID]["connected"]==False:
                     del self.__connectedSensors[sensorID]
-                    self.log.info("delete sensor %s"%(sensorID))
+                    LOG.info("delete sensor %s"%(sensorID))
         except:
-            self.log.error("can't clear disconnect sensors",exc_info=True)
+            LOG.error("can't clear disconnect sensors",exc_info=True)
             
     def __checkOneWire(self):
         '''
@@ -271,10 +275,10 @@ class ds1820(defaultGateway):
         
         if not os.path.isdir(self.config["path"]):
             self.__blockGateway()
-            self.log.error("no onewire installed")
+            LOG.error("no onewire installed")
             return False
         return True
            
     def __blockGateway(self):
-        self.log.info("block onewire bus for % sec"%(self.config.get("blockGateway",600)))
+        LOG.info("block onewire bus for % sec"%(self.config.get("blockGateway",600)))
         self.gatewayBlockTime=int(time.time())+self.config.get("blockGateway",600)
