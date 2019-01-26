@@ -1,0 +1,40 @@
+{
+    "dataMapper@rasp-heizung": {
+        "caller": "update",
+        "class": "mysqlManager",
+        "config": {
+            "db": "hmc",
+            "host": "192.168.3.100",
+            "mapping": {
+                "channel": "getChannel",
+                "deviceID": "getDeviceID",
+                "timestamp": "getTimestamp",
+                "value": "getValue"
+            },
+            "modulName": "dataMapper@rasp-heizung",
+            "password": "hmc1",
+            "port": 3306,
+            "table": "statistic",
+            "user": "hmc"
+        },
+        "enable": true,
+        "modul": "mysql",
+        "modulName": "dataMapper@rasp-heizung",
+        "package": "datamapper",
+        "runnable": false
+    },
+    "xmlHomeMatic@rasp-heizung": {
+        "caller": "update",
+        "class": "HMupdater",
+        "config": {
+            "hmHost": "http://192.168.3.90",
+            "modulName": "xmlHomeMatic@rasp-heizung",
+            "url": "/config/xmlapi/statechange.cgi"
+        },
+        "enable": true,
+        "modul": "xmlUpdate",
+        "modulName": "xmlHomeMatic@rasp-heizung",
+        "package": "homematic",
+        "runnable": false
+    }
+}

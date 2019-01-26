@@ -1,0 +1,11 @@
+15:38:05.145 -                       __main__ - 73- 697 - CRITICAL - Signal handler called with signal:2 frame:<frame object at 0xb6a77030>
+15:38:05.151 -                       __main__ - 113- 697 - CRITICAL - control C press!!,system going down !!
+15:38:05.158 -                       __main__ - 117- 697 - CRITICAL - system going down !!
+15:38:05.182 -       core.remoteClient.server - 116- 697 - CRITICAL - shutdown remote server core@rasp-heizung
+15:38:05.199 -       core.remoteClient.client - 80- 697 - CRITICAL - shutdown down remote client core@rasp-hmc
+15:38:05.214 -                  core.gateways - 153- 697 - CRITICAL - shutdown gateway onewire@rasp-heizung
+15:38:05.238 -    gateways.hmc.defaultGateway - 78- 697 - CRITICAL - stop onewire@rasp-heizung gateways
+15:38:05.275 -   core.remoteClient.exceptions - 40- 697 - CRITICAL - can't unserial data
+15:38:05.298 -       core.remoteClient.server - 107- 697 - ERROR - can't unserial data
+15:38:10.494 -                       __main__ - 120- 697 - CRITICAL - system is finally down !!
+15:38:10.500 -                       __main__ - 123- 697 - CRITICAL - control C press!!,system going down !!

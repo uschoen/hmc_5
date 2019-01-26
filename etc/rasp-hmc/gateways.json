@@ -1,0 +1,68 @@
+{
+    "homematic-RF@rasp-hmc": {
+        "class": "server",
+        "config": {
+            "HomeMaticURL": "http://192.168.3.90/config/xmlapi/statechange.cgi",
+            "MSGtimeout": 60,
+            "blockRPCServer": 60,
+            "devicePackage": "homematic",
+            "deviceType": "defaultDevice",
+            "enable": true,
+            "gateway": "homematic-RF.rasp-hmc",
+            "hm_interface_id": "hmc-RF",
+            "hm_ip": "192.168.3.90",
+            "hm_port": 2001,
+            "iseID": "1012",
+            "iseIDValue": 0,
+            "name": "homematic-RF@rasp-hmc",
+            "package": "homematic",
+            "rpc_ip": "192.168.3.77"
+        },
+        "enable": true,
+        "modul": "hm_RPC",
+        "package": "homematic"
+    },
+    "homematic-WIR@rasp-hmc": {
+        "class": "server",
+        "config": {
+            "HomeMaticURL": "http://192.168.3.90/config/xmlapi/statechange.cgi",
+            "MSGtimeout": 60,
+            "blockRPCServer": 60,
+            "devicePackage": "homematic",
+            "deviceType": "defaultDevice",
+            "enable": true,
+            "gateway": "homematic-WIR.rasp-hmc",
+            "hm_interface_id": "hmc-WIR",
+            "hm_ip": "192.168.3.90",
+            "hm_port": 2000,
+            "iseID": "1281",
+            "iseIDValue": 0,
+            "name": "homematic-WIR@rasp-hmc",
+            "package": "homematic",
+            "rpc_ip": "192.168.3.77"
+        },
+        "enable": true,
+        "modul": "hm_RPC",
+        "package": "homematic"
+    },
+    "onewire@rasp-heizung": {
+        "class": "ds1820",
+        "config": {
+            "blockGateway": 600,
+            "busmaster": "w1_bus_master1",
+            "devicePackage": "raspberry.onewire",
+            "deviceType": "ds1820",
+            "enable": true,
+            "gateway": "onewire.rasp-heizung",
+            "interval": 60,
+            "name": "onewire@rasp-heizung",
+            "package": "raspberry.onewire",
+            "path": "/sys/bus/w1/devices/",
+            "timeout": 60,
+            "tolerance": 0.2
+        },
+        "enable": true,
+        "modul": "ds1820",
+        "package": "raspberry.onewire"
+    }
+}
