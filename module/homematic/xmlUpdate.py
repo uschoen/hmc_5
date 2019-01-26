@@ -51,7 +51,7 @@ class HMupdater(object):
         try:
             deviceID=args.get('deviceID',"unkown")
             channelName=args.get('channelName',"unkown")
-            self.__log.debug("callback from device id %s"%(deviceID))
+            self.__log.debug("callback from device id %s to update Homematic"%(deviceID))
             try:
                 if not "iseID" in self.core.getAllDeviceChannelAttribute(deviceID,channelName):
                     self.__log.error("device id %s has no attribut iseID"%(deviceID))
@@ -61,7 +61,7 @@ class HMupdater(object):
                 return
             iseID=self.core.getDeviceChannelAttributValue(deviceID,channelName,'iseID')
             url=("%s%s?ise_id=%s&new_value=%s"%(self.__config['hmHost'],self.__config['url'],iseID,self.core.getDeviceChannelValue(deviceID,channelName)))
-            self.__log.info("url is %s "%(url))
+            self.__log.debug("url is %s "%(url))
             http = urllib3.PoolManager()
             response = http.request('GET', url)
             self.__log.debug("http response code %s:"%(response.data))
