@@ -1,5 +1,59 @@
 {
     "channels": {
+        "0:sticky_unreach": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1548486602
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1548486602
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1548486602
+                }
+            },
+            "name": "0:sticky_unreach",
+            "value": ""
+        },
+        "0:unreach": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1548486602
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1548486602
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1548486602
+                }
+            },
+            "name": "0:unreach",
+            "value": ""
+        },
         "1:state": {
             "enable": true,
             "events": {
