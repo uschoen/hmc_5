@@ -23,6 +23,21 @@ class modul():
         self.moduleCFG={}
         self.logger.info("load core.module modul")
     
+    def getModulConfiguration(self,objectID) :
+        '''
+        get the gateways configuration back
+        exception:
+                coreGatewayExecption
+        '''
+        if objectID not in self.module:
+            raise coreModuleException("gateway %s ist not exists"%(objectID))
+        try:
+            return self.module[objectID]['config']
+        except (coreModuleException) as e:
+            raise e
+        except:
+            raise coreModuleException("can't not read modulConfiguration objectID %s"%(objectID))
+        
     def getAllModulNames(self):
         try:
             return list(self.module.keys())
