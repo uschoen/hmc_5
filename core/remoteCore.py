@@ -9,14 +9,11 @@ __author__ = 'ullrich schoen'
 
 # Standard library imports
 import copy
-import logging
 
 # Local application imports
 from .hmcException import remoteCoreException,coreException
 from .remoteClient.client import coreClient
 from .remoteClient.server import coreServer
-
-LOG=logging.getLogger(__name__)
 
 class remoteCore():
     '''
@@ -25,7 +22,7 @@ class remoteCore():
     def __init__(self,*args):
         self.coreClients={}
         
-        LOG.info("load core.remoteCore modul")
+        self.logger.info("load core.remoteCore modul")
     
     def restoreCoreClient(self,objectID,coreCFG,syncStatus=False,forceUpdate=False):
         '''
@@ -64,7 +61,7 @@ class remoteCore():
         try:
             if objectID in self.coreClients:
                 if self.coreClients[objectID]['config']==coreCFG:
-                    LOG.info("current remote core %s confiuration is equal new configuration"%(object))
+                    self.logger.info("current remote core %s confiuration is equal new configuration"%(object))
                     return
                 self.__stopRemoteCoreClient(objectID)
                 self.__deleteRemoteCoreClient(objectID)
@@ -72,15 +69,15 @@ class remoteCore():
             try:
                 self.__startRemoteCoreClient(objectID)
             except (remoteCoreException) as e:
-                LOG.error("can't start %s: %s"%(objectID,e.msg))
+                self.logger.error("can't start %s: %s"%(objectID,e.msg))
             except:
-                LOG.error("can't start %s: unkown error"%(objectID), exc_info=True)
+                self.logger.error("can't start %s: unkown error"%(objectID), exc_info=True)
         except:
             raise remoteCoreException("can not restore remote core server %s"%(objectID))
     
     def __deleteRemoteCoreClient(self,objectID):
         try:
-            LOG.info("delete remote core client %s"%(objectID))
+            self.logger.info("delete remote core client %s"%(objectID))
             if objectID in self.coreClients:
                 self.__stopRemoteCoreClient(objectID)
                 del self.coreClients[objectID]
@@ -98,7 +95,7 @@ class remoteCore():
     
     def __stopRemoteCoreClient(self,objectID):
         try:
-            LOG.info("stop remote core client %s"%(objectID))
+            self.logger.info("stop remote core client %s"%(objectID))
             self.coreClients[objectID]['instance'].shutdown() 
             self.coreClients[objectID]['running']=False
         except:
@@ -109,12 +106,12 @@ class remoteCore():
             if objectID==None:
                 objectID="remoteClients@%s"%(self.host)
             if self.ifonThisHost(objectID):
-                LOG.info("stop all remote clients on host %s"%(self.host))
+                self.logger.info("stop all remote clients on host %s"%(self.host))
                 for coreName in self.coreClients:
                     try:
                         self.__stopRemoteCoreClient(coreName)
                     except:
-                        LOG.error("can't stop remote core client %s"%(coreName))
+                        self.logger.error("can't stop remote core client %s"%(coreName))
             else:
                 self.updateRemoteCore(forceUpdate,objectID,'stopAllRemoteCoreClients',objectID)
         except:
@@ -134,9 +131,9 @@ class remoteCore():
     def __startRemoteCoreClient(self,objectID):
         try:
             if not self.coreClients[objectID]['enable']:
-                LOG.error("can not start remote core %s, is disable"%(objectID))
+                self.logger.error("can not start remote core %s, is disable"%(objectID))
                 return
-            LOG.info("start remote core client %s"%(objectID))
+            self.logger.info("start remote core client %s"%(objectID))
             self.coreClients[objectID]['instance'].start() 
             self.coreClients[objectID]['running']=True
         except:
@@ -173,14 +170,14 @@ class remoteCore():
         try:
             remoteCoreCFG=self.loadJSON(fileNameABS)
             if len(remoteCoreCFG)==0:
-                LOG.info("remote core file is empty")
+                self.logger.info("remote core file is empty")
                 return
-            LOG.debug("load remote core file %s"%(fileNameABS))
+            self.logger.debug("load remote core file %s"%(fileNameABS))
             for coreName in remoteCoreCFG:
                 try:
                     self.__restoreCoreClient(coreName, remoteCoreCFG[coreName])
                 except:
-                    LOG.error("can't restore remote core %s"%(coreName),exc_info=True)
+                    self.logger.error("can't restore remote core %s"%(coreName),exc_info=True)
         except (coreException,remoteCoreException) as e:
             raise e
         except:
@@ -212,9 +209,9 @@ class remoteCore():
             raise remoteCoreException("no file name given to writeCoreConfiguration")
         try:
             if len(self.coreClients)==0:
-                LOG.info("can't save remote core files lenght is 0")
+                self.logger.info("can't save remote core files lenght is 0")
                 return
-            LOG.info("save remote core files")
+            self.logger.info("save remote core files")
             remoteCoreCFG={}
             for coreNames in self.coreClients:
                 remoteCoreCFG[coreNames]=self.coreClients[coreNames]['config']
@@ -249,7 +246,7 @@ class remoteCore():
                     self.coreClients[coreName]['instance'].updateRemoteCore(objectID,calling,args)
                     send="send"
             except:
-                LOG.error("can not update core Client queue: %s"%(coreName),exc_info=True)
+                self.logger.error("can not update core Client queue: %s"%(coreName),exc_info=True)
         self.writeFile(logpath,"%s;%s"%(send,updateData))       
     
     def __buildCoreClient(self,objectID,coreCFG={},syncStatus=False):
@@ -262,7 +259,7 @@ class remoteCore():
         if objectID in self.coreClients:
             raise remoteCoreException("gateway %s exists"%(objectID),False)
         try:
-            LOG.info("try to build remote core client %s"%(objectID))
+            self.logger.info("try to build remote core client %s"%(objectID))
             coreConfig={ 
                         "enable":False,
                         "blocked": 60,  
@@ -287,14 +284,14 @@ class remoteCore():
                 '''
                 build core Server
                 '''
-                LOG.info("remote core server %s is build"%(objectID))
+                self.logger.info("remote core server %s is build"%(objectID))
                 self.coreClients[objectID]['instance']=coreServer(self,coreConfig)
                 self.coreClients[objectID]['instance'].daemon=True   
             else:
                 '''
                 build core Client
                 '''
-                LOG.info("remote core client %s is build"%(objectID))
+                self.logger.info("remote core client %s is build"%(objectID))
                 self.coreClients[objectID]['instance']=coreClient(self,coreConfig)
                 self.coreClients[objectID]['instance'].daemon=True
                 if self.coreClients[objectID]['coreStatusSync']:

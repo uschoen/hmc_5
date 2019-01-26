@@ -5,11 +5,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 0
+                    "timestamp": 1545157224
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 0
+                    "timestamp": 1545157224
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -21,10 +21,10 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 0
+                    "timestamp": 1545157224
                 }
             },
-            "name": "unkown",
+            "name": "28-011591355eff",
             "value": 0
         }
     }
