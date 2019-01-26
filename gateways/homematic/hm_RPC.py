@@ -10,9 +10,6 @@ install
 __version__='5.0'
 __author__ = 'ullrich schoen'
 
-#TODO: if gaeway stop its send two tmes a rpc stop command to homematic
-
-
 # Standard library imports
 import threading
 import xmltodict                                            #@UnresolvedImport
