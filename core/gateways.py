@@ -359,11 +359,15 @@ class gateways():
     
     def __buildGatewayInstance(self,objectID,gatewayCFG):
         try:
-            pakage="gateways.%s.%s"%(gatewayCFG.get('package'),gatewayCFG.get('modul'))
-            self.logger.debug("try to bild gateway instance: %s  with package: %s"%(objectID,pakage))
+            package="gateways.%s.%s"%(gatewayCFG.get('package'),gatewayCFG.get('modul'))
+            self.logger.debug("try to bild gateway instance: %s  with package: %s"%(objectID,package))
             CLASS_NAME = gatewayCFG.get('class')
             ARGUMENTS = (gatewayCFG.get('config',{}),self)
-            module = importlib.import_module(pakage)
+            module = importlib.import_module(package)
+            if module.__version__<__version__:
+                LOG.warning("version of %s is %s and can by to low"%(package,module.__version__))
+            else:
+                LOG.debug( "version of %s is %s"%(package,module.__version__))
             self.gateways[objectID]['instance'] = getattr(module, CLASS_NAME)(*ARGUMENTS)
             self.gateways[objectID]['instance'].daemon = True 
         except:
