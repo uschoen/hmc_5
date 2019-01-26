@@ -63,46 +63,7 @@ class gateways():
                 self.updateRemoteCore(forceUpdate,objectID,'stopAllGateways',objectID)
         except:
             raise coreGatewayException("can not stopAllGateway")
-    
-    def stopGateway(self,objectID,forceUpdate=False):
-        '''
-            stop a gateway
-            
-            gatewayInstance: the gateway instance
-            raise exceptions
-            '''
-        if objectID not in self.gateways:
-            raise coreGatewayException("gateway %s is not existing"%(objectID),False)
-        try:
-            self.__stopGateway(objectID)
-            self.updateRemoteCore(forceUpdate,objectID,'stopGateway',objectID) 
-        except (coreGatewayException) as e:
-            raise e
-        except:
-            raise coreGatewayException("can not stop gateway %s"%(objectID),False)
-        
-    def __stopGateway(self,objectID):
-        '''
-            stop a gateway
-            
-            gatewayInstance: the gateway instance
-            raise exceptions
-            '''
-        try:
-            LOG.critical("shutdown gateway %s"%(objectID))
-            if self.ifonThisHost(objectID):
-                if self.gateways[objectID]['instance']:
-                    if self.gateways[objectID]['instance'].isAlive():
-                        self.gateways[objectID]['instance'].shutdown()
-                        self.gateways[objectID]['instance'].join(5)
-            self.gateways[objectID]['running']=False
-            self.gateways[objectID]['instance']=False
-            self.gatewayRunning=self.gatewayRunning-1
-        except (coreGatewayException) as e:
-            raise e
-        except:
-            raise coreGatewayException("can not stop gateway %s"%(objectID),False )
-        
+           
     def __deleteGateway(self,objectID):
         '''
         delete a gateway
@@ -151,22 +112,56 @@ class gateways():
         try:
             LOG.info("restore gateway %s"%(objectID))
             if objectID in self.gateways:
-                if gatewayCFG==self.gateways[object]['config']:
+                if gatewayCFG==self.getGatewayConfiguration(objectID):
                     LOG.info("gateway %s have the same configuration, do not restore")
                     return
                 self.__deleteGateway(objectID)
             self.__buildGateway(objectID,deepcopy(gatewayCFG))
-            if self.ifonThisHost(objectID):
-                if self.gateways[objectID]['enable']:
-                    self.__startGateway(objectID)
-                else:
-                    LOG.error("gateway %s is disable, can not start"%(objectID))  
+            if self.gateways[objectID]['enable']:
+                self.__startGateway(objectID)
             self.updateRemoteCore(forceUpdate,objectID,'restoreGateway',objectID,gatewayCFG)  
         except (coreGatewayException) as e:
             raise e  
         except:
             raise coreGatewayException("can't restore gateways %s"%(objectID),False)
+    
+    def stopGateway(self,objectID,forceUpdate=False):
+        '''
+            stop a gateway
+            
+            gatewayInstance: the gateway instance
+            raise exceptions
+            '''
+        if objectID not in self.gateways:
+            raise coreGatewayException("gateway %s is not existing"%(objectID),False)
+        try:
+            self.__stopGateway(objectID)
+            self.updateRemoteCore(forceUpdate,objectID,'stopGateway',objectID) 
+        except (coreGatewayException) as e:
+            raise e
+        except:
+            raise coreGatewayException("can not stop gateway %s"%(objectID),False)
         
+    def __stopGateway(self,objectID):
+        '''
+            stop a gateway
+            
+            gatewayInstance: the gateway instance
+            raise exceptions
+            '''
+        try:
+            LOG.critical("shutdown gateway %s"%(objectID))
+            if self.ifonThisHost(objectID):
+                if self.gateways[objectID]['instance']:
+                    if self.gateways[objectID]['instance'].isAlive():
+                        self.gateways[objectID]['instance'].shutdown()
+                        self.gateways[objectID]['instance'].join(5)
+            self.gateways[objectID]['running']=False
+            self.gateways[objectID]['instance']=False
+            self.gatewayRunning=self.gatewayRunning-1
+        except:
+            raise coreGatewayException("can not stop gateway %s"%(objectID),False )
+            
     def __startGateway(self,objectID):
         '''
         start a gateway
@@ -186,13 +181,17 @@ class gateways():
             raise coreGatewayException("gateways %s is disable"%(objectID),False)   
         try:
             LOG.info("start gateway %s"%(objectID))
-            if self.gateways[objectID]['instance']:
-                self.gateways[objectID]['instance'].start()
-            self.gateways[objectID]['running']=True
+            if self.ifonThisHost(objectID):
+                if self.gateways[objectID]['instance']:
+                    LOG.info("start instance gateway %s"%(objectID))
+                    self.gateways[objectID]['instance'].start()
+                    self.gateways[objectID]['running']=True
+                else:
+                    LOG.info("start gateway %s"%(objectID))
+                    self.gateways[objectID]['running']=True
             self.gatewayRunning=self.gatewayRunning+1
         except:
             self.gateways[objectID]['running']=False
-            self.disableGateway(objectID)
             raise coreGatewayException("can not start gateways %s"%(objectID),False)  
     
     def getGatewayConfiguration(self,objectID) :
@@ -358,8 +357,10 @@ class gateways():
                 except (coreGatewayException) as e:
                     raise e
         except (coreGatewayException) as e:
+            self.gateways[objectID]['enable']=False
             raise e
         except:
+            self.gateways[objectID]['enable']=False
             raise coreException("can not __buildGateway %s"%(objectID))
     
     def __buildGatewayInstance(self,objectID,gatewayCFG):
@@ -373,5 +374,4 @@ class gateways():
             self.gateways[objectID]['instance'] = getattr(module, CLASS_NAME)(*ARGUMENTS)
             self.gateways[objectID]['instance'].daemon = True 
         except:
-            self.gateways[objectID]['enable']=False
             raise coreGatewayException("can't build gateway instance %s"(objectID))
