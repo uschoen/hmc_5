@@ -134,7 +134,7 @@ class ds1820(defaultGateway):
             self.__updateSensorID(sensorID,self.__readSensor(path))
         except (Exception) as e:
             self.__connectedSensors[sensorID]["connected"]=False
-            LOG.error("can not read/update sensorID %s, disable senor"%(sensorID),exc_info=True)
+            LOG.error("can not read/update sensorID %s, disable senor"%(sensorID))
             
     def __readSensor(self,path):
         '''
@@ -152,13 +152,13 @@ class ds1820(defaultGateway):
                     value=round(float(value),2)
                     return value
                 else:
-                    raise gatewayException("value error at sensor path"%(path))    
+                    raise gatewayException("value error at sensor path"%(path),False)    
             else:
-                raise gatewayException("crc error at sensor path"%(path))
+                raise gatewayException("crc error at sensor path"%(path),False)
         except (gatewayException) as e:
             raise e
         except:
-            raise gatewayException("can not read sensor path %s"%(path))
+            raise gatewayException("can not read sensor path %s"%(path),False)
                
     def __updateSensorID(self,sensorID,value):
         '''
