@@ -121,6 +121,7 @@ class coreClient(threading.Thread):
             self.__clearCoreQueue()
             
             self.__syncQueue.queue.clear()
+            self.__syncCoreModule()
             self.__syncCoreDevices()
             self.__syncCoreGateways()
             self.__syncCoreClients()
@@ -253,6 +254,23 @@ class coreClient(threading.Thread):
                             'objectID':coreName,
                             'callFunction':'restoreCoreClient',
                             'args':args}
+                self.__syncQueue.put(updateObj)
+        except:
+            raise clientException("can't sync coreClients to host %s"%(self.__hostName),False)
+    
+    def __syncCoreModule(self):
+        '''
+        sync all comodulere  from this host
+        '''
+        try:
+            self.logger.info("sync module to host %s"%(self.__hostName))
+            for objectID in self.__core.getAllModulNames():
+                if not self.__core.ifonThisHost(objectID):
+                    continue
+                updateObj={
+                        'objectID':objectID,
+                        'callFunction':'restoreModul',
+                        'args':(objectID,self.__core.getModulConfiguration(objectID))}
                 self.__syncQueue.put(updateObj)
         except:
             raise clientException("can't sync coreClients to host %s"%(self.__hostName),False)
