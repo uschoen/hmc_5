@@ -85,8 +85,7 @@ class ds1820(defaultGateway):
                                     self.__readSenors(sensorID)
                                 except:
                                     self.__connectedSensors[sensorID]["connected"]=False
-                                    self.log.error("can not read/update sensorID %s, disable senor"%(sensorID),exc_info=True)
-                            
+                                    self.log.error("can not read/update sensorID %s, disable sensor"%(sensorID))
                             self.__LastReadSenors=int(time.time())+self.config.get("interval",360)
                     time.sleep(0.5)
                 except:
