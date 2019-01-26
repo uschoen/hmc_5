@@ -108,7 +108,7 @@ class mysqlManager(object):
     def __insert(self,sql):
         try:
             
-            self.__log.info("insert : %s"%(sql))
+            self.__log.debug("insert : %s"%(sql))
             cur = self.__dbConnection.cursor()
             cur.execute(sql)
             self.__dbConnection.commit()  
