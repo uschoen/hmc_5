@@ -220,8 +220,8 @@ class device():
         try:
             defaultDeviceCFG={
                                 'device':{
-                                    'type':"defaultDevice",
-                                    'package':"hmc",
+                                    'deviceType':"defaultDevice",
+                                    'devicePackage':"hmc",
                                     'deviceID':deviceID},
                                 'channels':{}}
             
@@ -231,12 +231,12 @@ class device():
                 defaultDeviceCFG['device'].update(deviceCFG.get('device',{}))
                 defaultDeviceCFG['channels'].update(deviceCFG.get('channels',{}))
             
-            devicePackage="gateways.%s.devices.%s"%(defaultDeviceCFG['device']['package'],defaultDeviceCFG['device']['type'])
+            devicePackage="gateways.%s.devices.%s"%(defaultDeviceCFG['device']['devicePackage'],defaultDeviceCFG['device']['deviceType'])
             devicePath="%s%s"%(self.path,devicePackage.replace('.','/'))
             '''
                 check if device file exists, if not, crate a new one
             '''
-            self.__checkIfDeviceFileExists("%s.py"%(devicePath),defaultDeviceCFG['device']['type'],defaultDeviceCFG['device']['package'])
+            self.__checkIfDeviceFileExists("%s.py"%(devicePath),defaultDeviceCFG['device']['deviceType'],defaultDeviceCFG['device']['devicePackage'])
             '''
                 check if config file exists
             '''
