@@ -12,7 +12,6 @@ __version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
-
 import logging
 import time
 import serial                   #@UnresolvedImport
@@ -20,9 +19,13 @@ import serial                   #@UnresolvedImport
 # Local application imports
 from core.hmcException import gatewayException
 from gateways.hmc.defaultGateway import defaultGateway
+from gateways.cul.fs20 import fs20device
+from gateways.cul.ws300 import ws300device
 
 LOG=logging.getLogger(__name__)
 LINEFEED=b'\r\n'
+
+
 class server(defaultGateway):
     '''
     classdocs
@@ -50,6 +53,13 @@ class server(defaultGateway):
             }
         self.config.update(gatewaysCFG)
         
+        ''' cul devices '''
+        self.__culDevices={
+            '21':self.__getBudget,
+            'F':fs20device.decodeFS20,
+            'K':ws300device.decodeWs300weather
+            }
+        
         ''' send budget '''
         self.__budget = 0
         
@@ -64,20 +74,6 @@ class server(defaultGateway):
         
         LOG.info("cul gateway is start")
         
-    def defaultDeviceConfig(self,deviceID):
-        config={
-                    "deviceID":deviceID,
-                    "enable":True,
-                    "name":deviceID,
-                    'deviceTyp':"defaultDevice",
-                    'devicePackage':"hmc"
-                   }
-        return config
-        
-    def defaultChannelConfig(self,deviceID):
-        config={}
-        return config
-    
     def send(self,command):
         LOG.info("gateway %s can`t send commands"%(self.config.get('name',"unkown")))
     
@@ -92,16 +88,19 @@ class server(defaultGateway):
                     if not self.__USBport:
                         self.__openUSB(self.config['usbport'], self.config['baudrate'], self.config['timeout'])
                         self.__initCUL()
-                        self.__readHWVersion()
-                        HWVerion=self.__readResult()
-                        self.__readVersion()
-                        Verion=self.__readResult()
-                        self.__readBudget()
-                        budget=self.__readResult()
-                        LOG.INFO("INIT CUL Version:%s HW:%s Budget:%s"%(Verion,HWVerion,budget))
+                        HWVerion=self.__readHWVersion()
+                        Verion=self.__readVersion()
+                        LOG.info("INIT CUL Version:%s HW:%s Budget:%s"%(Verion,HWVerion,self.__budget))
                     data=self.__readResult()
                     if not data=="":
                         LOG.debug("get message from cul:%s"%(data))
+                        if data[:2] in self.__culDevices:
+                            self.__culDevices[data[:2]](self,data[2:])
+                            continue
+                        if data[:1] in self.__culDevices:
+                            self.__culDevices[data[:1]](self,data[1:])
+                            continue
+                        LOG.warning("unkoen meassges from CUL %s"%(data))
                     time.sleep(0.1)
                 except (gatewayException) as e:
                     self.__blockCul(self.config['blockTime'])
@@ -177,14 +176,13 @@ class server(defaultGateway):
                 if not self.running:
                     break
             completed_line=b''.join(readChunks[:-2]).decode()
-            LOG.debug("received: %s" %(completed_line))
             return completed_line
         except (gatewayException) as e:
             raise e
         except:
             raise gatewayException("can not read usb port")  
           
-    def __readRssi(self,RAWvalue):
+    def calcRssi(self,RAWvalue):
         '''
         calculate  RSSI Value
         '''
@@ -206,7 +204,7 @@ class server(defaultGateway):
         '''
         try:
             LOG.info("read version")
-            self.__sendCommand("VH")
+            self.__sendCommand(b'VH')
             time.sleep(0.1)
             culHWVersion=self.__readResult()
             return culHWVersion
@@ -222,15 +220,33 @@ class server(defaultGateway):
         '''
         try:
             LOG.info("read budget")
-            self.__sendCommand("X")
+            self.__sendCommand(b'X')
             time.sleep(0.1)
-            budget = int(self.__readResult()[3:].strip()) * 10 or 1
-            self.__budget = budget
-            return budget
         except gatewayException as e:
             raise e
         except:
             raise gatewayException("can't not read budget",False)
+    
+    def __getBudget(self,value):
+        try:
+            budget=self.__calcBudget(value)
+            self.__budget=budget
+        except:
+            raise gatewayException("can't not getbudget",False)      
+
+    
+    def __calcBudget(self,value):
+        '''
+         command to read budget
+        exception will be raise
+        '''
+        try:
+            budget = int(value[3:].strip()) * 10 or 1
+            return budget
+        except gatewayException as e:
+            raise e
+        except:
+            raise gatewayException("can't not calcbudget",False)
             
     def __readVersion(self):
         '''
@@ -240,7 +256,7 @@ class server(defaultGateway):
         
         try:
             LOG.info("read version")
-            self.__sendCommand("V")
+            self.__sendCommand(b'V')
             time.sleep(0.1)
             culVersion=self.__readResult()
             return culVersion
@@ -256,7 +272,7 @@ class server(defaultGateway):
         '''
         try:
             LOG.info("initCUL")
-            self.__sendCommand("X21")
+            self.__sendCommand(b'X21')
             self.__USBport.reset_input_buffer()
             time.sleep(0.1)
         except gatewayException as e:
@@ -279,8 +295,8 @@ class server(defaultGateway):
             if self.__USBport:
                 if self.__USBport.isOpen():
                     return                
-                LOG.info("open serial, port:%s baud:%s timeout:%s"%(usbport,baudrate,timeout))
-                self.__USBport=serial.Serial(
+            LOG.info("open serial, port:%s baud:%s timeout:%s"%(usbport,baudrate,timeout))
+            self.__USBport=serial.Serial(
                               port=usbport,
                               baudrate = baudrate,
                               parity=serial.PARITY_NONE,
