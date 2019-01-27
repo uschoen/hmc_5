@@ -4,13 +4,16 @@ Created on 01.12.2018
 @author: uschoen
 '''
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
 import copy
+import logging
 # Local application imports
 from .deviceException import deviceChannelException
+
+LOG=logging.getLogger(__name__)
 
 class deviceChannel():
 
@@ -32,18 +35,18 @@ class deviceChannel():
         try:
             self.__defaultChannelEvents=dict((events,self.getEventParameters(events)) for events in self.getEventsTyps())
         except:
-            self.logger.error("can't load default channel events use empty configuration")
+            LOG.error("can't load default channel events use empty configuration")
             self.__defaultChannelEvents={}
             
         self.channels={}      
-        self.logger.debug("init deviceChannel finish(%s)"%(self.deviceID))
+        LOG.debug("init deviceChannel finish(%s)"%(self.deviceID))
     
     def loadDefaultChannels(self):
         '''
         load chanel default , delte all old channels
         '''
         try:
-            self.logger.debug("load defaults. delete old channels for deviceID %s"%(self.deviceID))
+            LOG.debug("load defaults. delete old channels for deviceID %s"%(self.deviceID))
             self.channels={}
             devicePackage=self.device['package']
             deviceFile="%sgateways/%s/devices/%s.json"%(self.path,devicePackage.replace('.','/'),self.device['type'])
@@ -53,9 +56,9 @@ class deviceChannel():
             deviceFileCFG.update(self._loadJSON(deviceFile))
             for channelName in deviceFileCFG['channels']:
                 self._addChannel(channelName,deviceFileCFG['channels'][channelName])
-                self.logger.debug("add new channel %s from config file"%(channelName))
+                LOG.debug("add new channel %s from config file"%(channelName))
         except:
-            self.logger.error("can't read device file use empty channel configuration") 
+            LOG.error("can't read device file use empty channel configuration") 
     
     def _addChannelToConfig(self,channelName,channelCFG):
         try:
@@ -65,13 +68,13 @@ class deviceChannel():
             try:
                 deviceFileCFG=self._loadJSON(deviceFile)
             except:
-                self.logger.error("can't read device file use empty configuration")
+                LOG.error("can't read device file use empty configuration")
             if channelName in deviceFileCFG['channels']:
                 return
             deviceFileCFG['channels'][channelName]=channelCFG
             self._writeJSON(deviceFile,deviceFileCFG)
         except:
-            self.logger.error("can't write configuration to %s"%(deviceFile))
+            LOG.error("can't write configuration to %s"%(deviceFile))
                      
     def ifDeviceChannelExist(self,channelName):
         '''
@@ -86,7 +89,7 @@ class deviceChannel():
         get all channel attribute
         public function
         '''    
-        self.logger.debug("get all channel atrribute for channel:%s"%(channelName))
+        LOG.debug("get all channel atrribute for channel:%s"%(channelName))
         try:
             if not channelName in self.channels:
                 raise deviceChannelException("channel %s is not exist"%(channelName))
@@ -102,7 +105,7 @@ class deviceChannel():
         get a value from channel attribute
         public function
         '''    
-        self.logger.debug("get value for channel %s and atrribute %s"%(channelName,attribut))
+        LOG.debug("get value for channel %s and atrribute %s"%(channelName,attribut))
         try:
             if not channelName in self.channels:
                 raise deviceChannelException("channel %s is not exist"%(channelName))
@@ -121,7 +124,7 @@ class deviceChannel():
         get value of channel
         public function
         '''    
-        self.logger.debug("get value for channel:%s"%(channelName))
+        LOG.debug("get value for channel:%s"%(channelName))
         try:
             if not channelName in self.channels:
                 raise deviceChannelException("channel %s is not exist"%(channelName))
@@ -139,7 +142,7 @@ class deviceChannel():
             if not channelName in self.channels:
                 raise deviceChannelException("channel %s is not exist"%(channelName))
             if self.channels[channelName]['value']==value:
-                self.logger.debug("value in deviceID %s and channel %s not change"%(self.deviceID,channelName))
+                LOG.debug("value in deviceID %s and channel %s not change"%(self.deviceID,channelName))
                 self.eventAction("onrefresh",channelName)
                 return
             self.channels[channelName]['value']=value 
