@@ -13,12 +13,12 @@ import importlib
 import time
 import os
 import py_compile
-
+import logging
 # Local application imports
 from .hmcException import coreDeviceException,coreException
 
 # Local apllication constant
-
+LOG=logging.getLogger(__name__)
 
 class device():
     '''
@@ -30,7 +30,7 @@ class device():
         '''
         self.devices={}
         
-        self.logger.info("load core.device modul")
+        LOG.info("load core.device modul")
     
     def addDevice(self,deviceID,deviceCFG,forceUpdate=False):
         ''' 
@@ -100,9 +100,9 @@ class device():
         ''' 
         try:
             restore=True
-            self.logger.info("restore device with device id %s and deviceType:%s"%(objectID,deviceCFG['device']['type']))
+            LOG.info("restore device with device id %s and deviceType:%s"%(objectID,deviceCFG['device']['type']))
             if self.ifDeviceIDExists(objectID):
-                self.logger.info("deviceID  exists :%s, old device will be delete"%(objectID))
+                LOG.info("deviceID  exists :%s, old device will be delete"%(objectID))
                 self.__deleteDevice(objectID)
             self.__buildDevice(objectID,copy.deepcopy(deviceCFG),restore)
             self.updateRemoteCore(forceUpdate,objectID,'restoreDevice',objectID,deviceCFG)
@@ -121,7 +121,7 @@ class device():
         try:
             if not self.ifDeviceIDExists(objectID):
                 return
-            self.logger.info("delete deviceID %s"%(objectID))
+            LOG.info("delete deviceID %s"%(objectID))
             self.devices[objectID].delete(False)
             del self.devices[objectID]
         except coreDeviceException as e:
@@ -251,11 +251,11 @@ class device():
                 self.devices[deviceID]= getattr(classModul,className)(**argumente)
                 if hasattr(classModul, '__version__'):
                     if classModul.__version__<__version__:
-                        self.logger.warning("version of %s is %s and can by to low"%(devicePackage,classModul.__version__))
+                        LOG.warning("version of %s is %s and can by to low"%(devicePackage,classModul.__version__))
                     else:
-                        self.logger.debug( "version of %s is %s"%(devicePackage,classModul.__version__))
+                        LOG.debug( "version of %s is %s"%(devicePackage,classModul.__version__))
                 else:
-                    self.logger.warning("package %s has no version Info"%(devicePackage))
+                    LOG.warning("package %s has no version Info"%(devicePackage))
             except :
                 raise coreDeviceException("can't not load package %s"%(devicePackage))
         except (coreException,coreDeviceException) as e:
@@ -266,7 +266,7 @@ class device():
     def __loadPackage(self,devicePackage):
         try:
             classModul = importlib.import_module(devicePackage)
-            self.logger.info("load pakage %s"%(devicePackage))
+            LOG.info("load pakage %s"%(devicePackage))
             return classModul
         except:
             raise coreException("can't not loadPackage %s"%(devicePackage))
@@ -297,9 +297,9 @@ class device():
                 objectID="device@%s"%(self.host)
             if self.ifonThisHost(objectID):
                 if len(self.devices)==0:
-                    self.logger.info("can't write device configuration, lenght is 0")
+                    LOG.info("can't write device configuration, lenght is 0")
                     return
-                self.logger.info("save device file %s"%(fileNameABS))
+                LOG.info("save device file %s"%(fileNameABS))
                 devices={}
                 for deviceID in self.getAllDeviceID():
                     devices[deviceID]=self.devices[deviceID].getConfiguration()
@@ -331,17 +331,17 @@ class device():
             if self.ifonThisHost(objectID):
                 if not self.ifFileExists(fileNameABS):
                         raise coreDeviceException("file %s not found"%(fileNameABS))
-                self.logger.info("load device file %s"%(fileNameABS))
+                LOG.info("load device file %s"%(fileNameABS))
                 deviceCFG=self.loadJSON(fileNameABS=fileNameABS)
                 if len(deviceCFG)==0:
-                    self.logger.info("device file is empty")
+                    LOG.info("device file is empty")
                     return
                 for deviceID in deviceCFG:
                     try:
                         deviceIDCFG=deviceCFG[deviceID]
                         self.restoreDevice(deviceID,deviceIDCFG)
                     except:
-                        self.logger.critical("unkown error:can't restore deviceID: %s"(deviceID)) 
+                        LOG.critical("unkown error:can't restore deviceID: %s"(deviceID)) 
             else:
                 forceUpdate=True
                 self.updateRemoteCore(forceUpdate,objectID,'loadDeviceConfiguration',objectID,fileNameABS)
@@ -371,7 +371,7 @@ class device():
             pythonFile.write("        deviceConfig['device']['package']=\"%s\"\n"%(devicePackage))
             pythonFile.write("        deviceConfig['device']['type']=\"%s\"\n"%(deviceType))
             pythonFile.write("        masterDevice.__init__(self, deviceID, core, deviceConfig,restore)\n")
-            pythonFile.write('        self.logger.info("init device type %s finish(%s)"%(__DEVICENTYPE__,self.deviceID))')
+            pythonFile.write('        LOG.info("init device type %s finish(%s)"%(__DEVICENTYPE__,self.deviceID))')
             pythonFile.close()
             py_compile.compile(os.path.normpath(devicefileName))
         except:
