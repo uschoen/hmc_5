@@ -13,7 +13,7 @@ from core.hmcException import gatewayException
 
 LOG=logging.getLogger(__name__)
 LOG=logging.getLogger(__name__)
-NAMEDEVICE="value"
+WETHERDEVICE="wetter"
 NAMEDEVICERSSI="rssi"
 
 
@@ -55,37 +55,118 @@ class ws300device(object):
                 LOG.error( "incorrect message lenght: %s"%(len(msg)))
                 return
             splitMsg=list(msg)
-            rssi=self.rssi(int(splitMsg[14]+splitMsg[15],16))
-    
-            ''' 
-            temperature 
-            '''
-            deviceID="ks300_temperature@%s"%(self.config['gateway'])
-            value=float(splitMsg[5]+splitMsg[2]+"."+splitMsg[3])
-            if splitMsg[0] >="8":
-                value=value*(-1)
-            self._addWS300(deviceID,'ks300_temperature','temperature',value,rssi)
-            '''
-            humidity
-            '''
-            deviceID="ks300_humidity@%s"%(self.config['gateway'])
-            value=int(splitMsg[7]+splitMsg[4])
-            self._addWS300(deviceID,'ks300_humidity','humidity',value,rssi)
+            rssi=self.calcRssi(int(splitMsg[14]+splitMsg[15],16))
+            ''' wether device '''
+            deviceID="%s@%s"%(WETHERDEVICE,self.config['gateway'])
+            
+            if not self.core.ifDeviceIDExists(deviceID):
+                '''
+                add device
+                '''
+                deviceCFG={
+                    'deviceID':deviceID,
+                    'deviceType':"ws300",
+                    'devicePackage':"cul",
+                    }
+                self.core.addDevice(deviceID,deviceCFG)
+            try:
+                ''' 
+                temperature 
+                '''
+                channelName="temperature"
+                if not self.core.ifDeviceChannelExist(deviceID,channelName):
+                    ''' add channel temperature '''
+                    channeCFG={
+                        'name':channelName
+                        }
+                    self.core.addDeviceChannel(deviceID,channelName,channeCFG)                             
+                value=float(splitMsg[5]+splitMsg[2]+"."+splitMsg[3])
+                if splitMsg[0] >="8":
+                    value=value*(-1)
+                self.core.setDeviceChannelValue(deviceID,channelName,value)
+            except:
+                LOG.error("can't add temperature channel",exc_info=True)
                 
-            ''' wind '''
-            deviceID="ks300_wind@%s"%(self.config['gateway'])
-            value=int(splitMsg[8]+splitMsg[9]+splitMsg[6])/10
-            self._addWS300(deviceID,'ks300_wind','wind',value,rssi)
+            try:   
+                '''
+                humidity
+                '''
+                channelName="humidity"
+                if not self.core.ifDeviceChannelExist(deviceID,channelName):
+                    ''' add channel humidity '''
+                    channeCFG={
+                        'name':channelName
+                        }
+                    self.core.addDeviceChannel(deviceID,channelName,channeCFG)
+                value=int(splitMsg[7]+splitMsg[4])
+                self.core.setDeviceChannelValue(deviceID,channelName,value)
+            except:
+                LOG.error("can't add humidity channel",exc_info=True)
+                
+            try:         
+                ''' 
+                wind 
+                '''
+                channelName="wind"
+                if not self.core.ifDeviceChannelExist(deviceID,channelName):
+                    ''' add channel wind '''
+                    channeCFG={
+                        'name':channelName
+                        }
+                    self.core.addDeviceChannel(deviceID,channelName,channeCFG)
+                value=int(splitMsg[8]+splitMsg[9]+splitMsg[6])/10
+                self.core.setDeviceChannelValue(deviceID,channelName,value)
+            except:
+                LOG.error("can't add wind channel",exc_info=True)
+                
+            try:
+                '''
+                windchill
+                '''  
+                channelName="windchill"
+                if not self.core.ifDeviceChannelExist(deviceID,channelName):
+                    ''' add channel windchill '''
+                    channeCFG={
+                        'name':channelName
+                        }
+                    self.core.addDeviceChannel(deviceID,channelName,channeCFG)
+                value=int(splitMsg[8]+splitMsg[9]+splitMsg[6])/10
+                self.core.setDeviceChannelValue(deviceID,channelName,value)
+            except:
+                LOG.error("can't add windchill channel",exc_info=True)
+                
+            try:    
+                '''
+                rain
+                '''
+                channelName="rain"
+                if not self.core.ifDeviceChannelExist(deviceID,channelName):
+                    ''' add channel rain '''
+                    channeCFG={
+                        'name':channelName
+                        }
+                    self.core.addDeviceChannel(deviceID,channelName,channeCFG)
+                value=int(splitMsg[13]+splitMsg[10]+splitMsg[11],16)
+                self.core.setDeviceChannelValue(deviceID,channelName,value)
+            except:
+                LOG.error("can't add rain channel",exc_info=True)
+                
+            try:
+                '''
+                rssi
+                '''
+                channelName="rssi"
+                if not self.core.ifDeviceChannelExist(deviceID,channelName):
+                    ''' add channel rssi '''
+                    channeCFG={
+                        'name':channelName
+                        }
+                    self.core.addDeviceChannel(deviceID,channelName,channeCFG)
+                self.core.setDeviceChannelValue(deviceID,channelName,rssi)
             
-            ''' windchill '''
-            deviceID="ks300_windchill@%s"%(self.config['gateway'])
-            value=int(splitMsg[8]+splitMsg[9]+splitMsg[6])/10
-            self._addWS300(deviceID,'ks300_windchill','windchill',value,rssi)
-            
-            ''' rain '''
-            deviceID="ks300_rain@%s"%(self.config['gateway'])
-            value=int(splitMsg[13]+splitMsg[10]+splitMsg[11],16)
-            self._addWS300(deviceID,'ks300_rain','rain',value,rssi)
+            except:
+                LOG.error("can't add rssi channel",exc_info=True)
+                
             
         except :
             LOG.critical("can not update ks300", exc_info=True)
