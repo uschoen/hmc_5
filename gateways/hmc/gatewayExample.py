@@ -8,16 +8,16 @@ __version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
-import threading
 import logging
 import time
 
 # Local application imports
-from core.hmcException import gatewayException 
+from core.hmcException import gatewayException
+from gateways.hmc.defaultGateway import defaultGateway
 
 LOG=logging.getLogger(__name__)
 
-class defaultGateway(threading.Thread):
+class examplerServer(defaultGateway):
     '''
     classdocs
     '''
@@ -131,7 +131,7 @@ if __name__ == '__main__':
                 "config":{
                     "name":"defaultGW test"}
                         }
-    gateways = defaultGateway(gatewayCFG,coreOBJ)
+    gateways = examplerServer(gatewayCFG,coreOBJ)
     gateways.daemon = True
     LOG.info("start gateway %s"%("deafultGW"))
     gateways.start()
