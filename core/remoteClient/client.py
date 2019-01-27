@@ -147,7 +147,7 @@ class coreClient(threading.Thread):
         '''
         try:
             if self.__clientBlocked>int(time.time()):
-                self.logger.debug("core client %s block for %i s"%(self.__hostName,self.__clientBlocked-int(time.time())))
+                self.logger.info("core client %s block for %i s"%(self.__hostName,self.__clientBlocked-int(time.time())))
                 return
             self.logger.debug("putting job for objectID:%s callFunction:%s into queue from %s"%(objectID,callFunction,self.__hostName))
             updateObj={

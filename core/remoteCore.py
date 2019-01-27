@@ -249,7 +249,7 @@ class remoteCore():
                     self.coreClients[coreName]['instance'].updateRemoteCore(objectID,calling,args)
                     send="send"
             except:
-                LOG.error("can not update core Client queue: %s"%(coreName),exc_info=True)
+                LOG.error("can not update core Client queue: %s"%(coreName))
         self.writeFile(logpath,"%s;%s"%(send,updateData))       
     
     def __buildCoreClient(self,objectID,coreCFG={},syncStatus=False):
