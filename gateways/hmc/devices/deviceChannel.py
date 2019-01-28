@@ -39,7 +39,7 @@ class deviceChannel():
             self.__defaultChannelEvents={}
             
         self.channels={}      
-        LOG.debug("init deviceChannel finish(%s)"%(self.deviceID))
+        LOG.info("init deviceChannels deviceID:%s version:%s"%(self.deviceID,__version__))
     
     def loadDefaultChannels(self):
         '''
@@ -48,8 +48,8 @@ class deviceChannel():
         try:
             LOG.debug("load defaults. delete old channels for deviceID %s"%(self.deviceID))
             self.channels={}
-            devicePackage=self.device['package']
-            deviceFile="%sgateways/%s/devices/%s.json"%(self.path,devicePackage.replace('.','/'),self.device['type'])
+            devicePackage=self.device['devicePackage']
+            deviceFile="%sgateways/%s/devices/%s.json"%(self.path,devicePackage.replace('.','/'),self.device['deviceType'])
             deviceFileCFG={
                 'channels':{}
                 }
@@ -62,8 +62,8 @@ class deviceChannel():
     
     def _addChannelToConfig(self,channelName,channelCFG):
         try:
-            devicePackage=self.device['package']
-            deviceFile="%sgateways/%s/devices/%s.json"%(self.path,devicePackage.replace('.','/'),self.device['type'])
+            devicePackage=self.device['devicePackage']
+            deviceFile="%sgateways/%s/devices/%s.json"%(self.path,devicePackage.replace('.','/'),self.device['deviceType'])
             deviceFileCFG={}
             try:
                 deviceFileCFG=self._loadJSON(deviceFile)

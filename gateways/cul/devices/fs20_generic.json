@@ -5,11 +5,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1548611818
+                    "timestamp": 1548658955
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1548611818
+                    "timestamp": 1548658955
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -21,7 +21,7 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1548611818
+                    "timestamp": 1548658955
                 }
             },
             "name": "RSSI",
@@ -32,11 +32,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1548611818
+                    "timestamp": 1548658955
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1548611818
+                    "timestamp": 1548658955
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -48,11 +48,11 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1548611818
+                    "timestamp": 1548658955
                 }
             },
-            "fs20ID": "1B1B00",
-            "name": "1B1B00",
+            "fs20ID": "1B1B04",
+            "name": "1B1B04",
             "value": ""
         }
     }

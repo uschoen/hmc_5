@@ -4,7 +4,7 @@ Created on 01.12.2018
 @author: uschoen
 '''
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
@@ -30,7 +30,7 @@ class device():
         '''
         self.devices={}
         
-        LOG.info("load core.device modul")
+        LOG.info("load core.device modul version %s"%(__version__))
     
     def addDevice(self,deviceID,deviceCFG,forceUpdate=False):
         ''' 
@@ -100,7 +100,7 @@ class device():
         ''' 
         try:
             restore=True
-            LOG.info("restore device with device id %s and deviceType:%s"%(objectID,deviceCFG['device']['type']))
+            LOG.info("restore device with device id %s and deviceType:%s"%(objectID,deviceCFG['device']['deviceType']))
             if self.ifDeviceIDExists(objectID):
                 LOG.info("deviceID  exists :%s, old device will be delete"%(objectID))
                 self.__deleteDevice(objectID)
@@ -358,6 +358,8 @@ class device():
             pythonFile.write("\'\'\'\nCreated on %s\n"%(time.strftime("%d.%m.%Y")))
             pythonFile.write("@author: %s\n\n"%(__author__))
             pythonFile.write("\'\'\'\n")
+            pythonFile.write("\n")
+            pythonFile.write("# Standard library imports\n")
             pythonFile.write("import logging\n")
             pythonFile.write("# Local application imports\n")
             pythonFile.write("from gateways.hmc.devices.masterDevice import masterDevice\n\n")
@@ -371,10 +373,10 @@ class device():
             pythonFile.write("class deviceManager(masterDevice):\n")
             pythonFile.write("    def __init__(self,deviceID,core,deviceCFG={},restore=False):\n")
             pythonFile.write("        deviceConfig=deviceCFG\n")
-            pythonFile.write("        deviceConfig['device']['package']=\"%s\"\n"%(devicePackage))
-            pythonFile.write("        deviceConfig['device']['type']=\"%s\"\n"%(deviceType))
+            pythonFile.write("        deviceConfig['devicePackage']=__DEVICEPACKAGE__\n")
+            pythonFile.write("        deviceConfig['deviceType']=__DEVICENTYPE__\n")
             pythonFile.write("        masterDevice.__init__(self, deviceID, core, deviceConfig,restore)\n")
-            pythonFile.write('        LOG.info("init device type %s finish(%s)"%(__DEVICENTYPE__,self.deviceID))')
+            pythonFile.write('        LOG.info("init deviceID:%s type:%s version:%s"%(self.deviceID,__DEVICENTYPE__,__version__))')
             pythonFile.close()
             py_compile.compile(os.path.normpath(devicefileName))
         except:

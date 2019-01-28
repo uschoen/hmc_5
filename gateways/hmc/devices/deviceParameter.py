@@ -27,8 +27,8 @@ class deviceParameter():
         self.device={
                         'enable':True,
                         'name':self.deviceID,
-                        'type':__DEVICETYPE__,
-                        'package':__DEVICEPACKAGE__,
+                        'deviceType':__DEVICETYPE__,
+                        'devicePackage':__DEVICEPACKAGE__,
                         'events':{}
                       }
         
@@ -37,7 +37,7 @@ class deviceParameter():
         except:
             self.__defaultDeviceEvents={}
             
-        LOG.debug("init deviceParameter finish(%s)"%(self.deviceID))
+        LOG.info("init deviceParameter deviceID:%s version:%s"%(self.deviceID,__version__))
     
     def updateDeviceParameter(self,deviceCFG={}):
         '''

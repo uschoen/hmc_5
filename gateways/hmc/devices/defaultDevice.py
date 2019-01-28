@@ -10,14 +10,16 @@ from masterDevice import masterDevice
 
 __version__="5.1"
 __author__="ullrich schoen"
-__DEVICENNAME__="ds1820"
 __DEVICEPACKAGE__="hmc.devices"
+__DEVICENTYPE__="defaultDevice"
+
 LOG=logging.getLogger(__name__)
 
 class deviceManager(masterDevice):
 
-    def __init__(self,deviceID,core,deviceCFG={},adding=True):
-        masterDevice.__init__(self, deviceID, core, deviceCFG, adding)
-        self.device['type']=__DEVICENNAME__
-        self.device['package']=__DEVICEPACKAGE__
-        LOG.info("init device %s finish(%s)"%(__DEVICENNAME__,self.deviceID))
+    def __init__(self,deviceID,core,deviceCFG={},restore=False):
+        deviceConfig=deviceCFG
+        deviceConfig['devicePackage']=__DEVICEPACKAGE__
+        deviceConfig['deviceType']=__DEVICENTYPE__
+        masterDevice.__init__(self, deviceID, core, deviceConfig, restore)
+        LOG.info("init deviceID:%s type:%s version:%s"%(self.deviceID,__DEVICENTYPE__,__version__))

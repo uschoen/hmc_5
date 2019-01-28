@@ -23,7 +23,10 @@ from .deviceException import deviceException,deviceConfigurationException
 
 LOG=logging.getLogger(__name__)
 
-class masterDevice(deviceChannel,deviceParameter,deviceEvents,object):
+class masterDevice(deviceChannel,
+                   deviceParameter,
+                   deviceEvents,
+                   object):
 
     def __init__ (self,deviceID,core,deviceCFG={},restore=False):
         '''
@@ -46,7 +49,7 @@ class masterDevice(deviceChannel,deviceParameter,deviceEvents,object):
             self.loadDefaultChannels()
             self.eventAction("oncreate",'device')
 
-        LOG.debug("init %s finish(%s)"%(DEVICENTYPE,self.deviceID))
+        LOG.info("init masterDevice deviceID:%s version:%s"%(self.deviceID,__version__))
         
             
     
