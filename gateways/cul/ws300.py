@@ -4,7 +4,7 @@ Created on 23.12.2017
 @author: uschoen
 '''
 
-__verion__=5.1
+__version__=5.1
 
 # Standard library imports
 import logging
@@ -23,7 +23,7 @@ class ws300device(object):
     
     '''
     def __init__(self):
-        LOG.debug("init cul ws300device version: %s"%(__verion__))
+        LOG.debug("init cul ws300device version: %s"%(__version__))
         
     def decodeWs300weather(self,msg):
         try:

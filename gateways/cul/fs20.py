@@ -3,7 +3,7 @@ Created on 23.12.2017
 
 @author: uschoen
 '''
-__verion__=5.1
+__version__=5.1
 
 # Standard library imports
 import logging
@@ -22,7 +22,7 @@ class fs20device(object):
     
     '''
     def __init__(self):
-        LOG.debug("init cul fs20 version: %s"%(__verion__))
+        LOG.debug("init cul fs20 version: %s"%(__version__))
         
     def decodeFS20(self,msg):
         try:

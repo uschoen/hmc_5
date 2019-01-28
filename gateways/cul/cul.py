@@ -53,7 +53,7 @@ class server(defaultGateway,
             'baudrate':"9600",
             'timeout':1,
             'blockTime':60,
-            'alive':60           
+            'alive':320       
             }
         self.config.update(gatewaysCFG)
         
@@ -101,7 +101,8 @@ class server(defaultGateway,
                         self.__initCUL()
                         HWVerion=self.__readHWVersion()
                         Verion=self.__readVersion()
-                        LOG.info("INIT CUL Version:%s HW:%s Budget:%s"%(Verion,HWVerion,self.__budget))
+                        LOG.info("INIT CUL Version:%s HW:%s"%(Verion,HWVerion))
+                        self.__alive=int(time.time())+self.config['alive']
                     data=self.__readResult()
                     if not data=="":
                         self.__alive=int(time.time())+self.config['alive']
@@ -116,7 +117,9 @@ class server(defaultGateway,
                     if self.__alive<time.time():
                         ''' check if cul alive '''
                         self.__readBudget()
-                        self.__alive=int(time.time())+self.config['alive']
+                    if (self.__alive+5)<time.time():
+                        LOG.error("get cul timeout, restart")
+                        self.__closeUSB()
                     time.sleep(0.1)
                 except (gatewayException) as e:
                     self.__blockCul(self.config['blockTime'])
@@ -235,7 +238,7 @@ class server(defaultGateway,
         exception will be raise
         '''
         try:
-            LOG.info("read budget")
+            LOG.debug("read budget")
             self.__sendCommand(b'X')
             time.sleep(0.1)
         except gatewayException as e:
@@ -247,7 +250,7 @@ class server(defaultGateway,
         try:
             budget=self.__calcBudget(value)
             self.__budget=budget
-            LOG.debug("cul get budget %s"%(self.__budget))
+            LOG.info("cul get budget %s"%(self.__budget))
         except:
             raise gatewayException("can't not getbudget",False)      
 
