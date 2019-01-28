@@ -52,7 +52,8 @@ class server(defaultGateway,
             'usbport':"/dev/ttyACM0",
             'baudrate':"9600",
             'timeout':1,
-            'blockTime':60           
+            'blockTime':60,
+            'alive':60           
             }
         self.config.update(gatewaysCFG)
         
@@ -75,7 +76,14 @@ class server(defaultGateway,
         ''' block at errors '''
         self.__block=0
         
-        LOG.info("cul gateway is start")
+        ''' check alive '''
+        self.__alive=0
+        
+        ''' init cul devices '''
+        fs20device.__init__(self)
+        ws300device.__init__(self)
+        
+        LOG.info("init cul gateway version:%s"%(__version__))
         
     def send(self,command):
         LOG.info("gateway %s can`t send commands"%(self.config.get('name',"unkown")))
@@ -96,6 +104,7 @@ class server(defaultGateway,
                         LOG.info("INIT CUL Version:%s HW:%s Budget:%s"%(Verion,HWVerion,self.__budget))
                     data=self.__readResult()
                     if not data=="":
+                        self.__alive=int(time.time())+self.config['alive']
                         LOG.debug("get message from cul:%s"%(data))
                         if data[:2] in self.__culDevices:
                             self.__culDevices[data[:2]](data[2:])
@@ -103,7 +112,11 @@ class server(defaultGateway,
                         if data[:1] in self.__culDevices:
                             self.__culDevices[data[:1]](data[1:])
                             continue
-                        LOG.warning("unkoen meassges from CUL %s"%(data))
+                        LOG.warning("unkown meassges from CUL %s"%(data))
+                    if self.__alive<time.time():
+                        ''' check if cul alive '''
+                        self.__readBudget()
+                        self.__alive=int(time.time())+self.config['alive']
                     time.sleep(0.1)
                 except (gatewayException) as e:
                     self.__blockCul(self.config['blockTime'])
@@ -234,6 +247,7 @@ class server(defaultGateway,
         try:
             budget=self.__calcBudget(value)
             self.__budget=budget
+            LOG.debug("cul get budget %s"%(self.__budget))
         except:
             raise gatewayException("can't not getbudget",False)      
 
@@ -244,7 +258,7 @@ class server(defaultGateway,
         exception will be raise
         '''
         try:
-            budget = int(value[3:].strip()) * 10 or 1
+            budget = int(value[2:].strip()) * 10 or 1
             return budget
         except gatewayException as e:
             raise e

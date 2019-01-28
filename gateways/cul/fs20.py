@@ -22,7 +22,7 @@ class fs20device(object):
     
     '''
     def __init__(self):
-        LOG.debug("cul fs20 devices init")
+        LOG.debug("init cul fs20 version: %s"%(__verion__))
         
     def decodeFS20(self,msg):
         try:
