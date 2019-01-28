@@ -4,7 +4,7 @@ Created on 01.12.2018
 @author: uschoen
 '''
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 DEVICENTYPE="defaultDevice"
 DEVICEPACKAGE="hmc.devices"
@@ -21,14 +21,14 @@ from gateways.hmc.devices.deviceParameter import deviceParameter
 from gateways.hmc.devices.deviceEvents import deviceEvents
 from .deviceException import deviceException,deviceConfigurationException
 
-class masterDevice(deviceChannel,deviceParameter,deviceEvents,object):
+LOG=logging.getLogger(__name__)
+
+class masterDevice(deviceChannel,
+                   deviceParameter,
+                   deviceEvents,
+                   object):
 
     def __init__ (self,deviceID,core,deviceCFG={},restore=False):
-        '''
-        logger object
-        '''                            
-        self.logger=logging.getLogger(__name__)  
-        
         '''
         core 
         '''
@@ -49,7 +49,7 @@ class masterDevice(deviceChannel,deviceParameter,deviceEvents,object):
             self.loadDefaultChannels()
             self.eventAction("oncreate",'device')
 
-        self.logger.debug("init %s finish(%s)"%(DEVICENTYPE,self.deviceID))
+        LOG.info("init masterDevice deviceID:%s version:%s"%(self.deviceID,__version__))
         
             
     
@@ -58,12 +58,12 @@ class masterDevice(deviceChannel,deviceParameter,deviceEvents,object):
         restore a device
         '''
         try:
-            self.logger.debug("restore deviceID %s"%(self.deviceID))
+            LOG.debug("restore deviceID %s"%(self.deviceID))
             self.updateDeviceParameter(deviceCFG.get('device',{}))
             self.loadDefaultChannels()
             deviceChannelConfig=deviceCFG.get('channels',{})
             for channelName in deviceChannelConfig:
-                self.logger.debug("restore channel %s for deviceID %s"%(channelName,self.deviceID))
+                LOG.debug("restore channel %s for deviceID %s"%(channelName,self.deviceID))
                 self._addChannel(channelName,deviceChannelConfig[channelName])
         except:
             raise deviceConfigurationException("can't restore deviceID %s"%(self.deviceID))
@@ -83,7 +83,7 @@ class masterDevice(deviceChannel,deviceParameter,deviceEvents,object):
             raise deviceException("can't get configuration")
     
     def _writeJSON(self,filename,data={}):
-        self.logger.info("write configuration to %s"%(filename))
+        LOG.info("write configuration to %s"%(filename))
         try:
             with open(os.path.normpath(filename),'w') as outfile:
                 json.dump(data, outfile,sort_keys=True, indent=4)

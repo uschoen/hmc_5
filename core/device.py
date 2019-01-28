@@ -4,7 +4,7 @@ Created on 01.12.2018
 @author: uschoen
 '''
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
@@ -13,12 +13,12 @@ import importlib
 import time
 import os
 import py_compile
-
+import logging
 # Local application imports
 from .hmcException import coreDeviceException,coreException
 
 # Local apllication constant
-
+LOG=logging.getLogger(__name__)
 
 class device():
     '''
@@ -30,7 +30,7 @@ class device():
         '''
         self.devices={}
         
-        self.logger.info("load core.device modul")
+        LOG.info("load core.device modul version %s"%(__version__))
     
     def addDevice(self,deviceID,deviceCFG,forceUpdate=False):
         ''' 
@@ -100,9 +100,9 @@ class device():
         ''' 
         try:
             restore=True
-            self.logger.info("restore device with device id %s and deviceType:%s"%(objectID,deviceCFG['device']['type']))
+            LOG.info("restore device with device id %s and deviceType:%s"%(objectID,deviceCFG['device']['deviceType']))
             if self.ifDeviceIDExists(objectID):
-                self.logger.info("deviceID  exists :%s, old device will be delete"%(objectID))
+                LOG.info("deviceID  exists :%s, old device will be delete"%(objectID))
                 self.__deleteDevice(objectID)
             self.__buildDevice(objectID,copy.deepcopy(deviceCFG),restore)
             self.updateRemoteCore(forceUpdate,objectID,'restoreDevice',objectID,deviceCFG)
@@ -121,7 +121,7 @@ class device():
         try:
             if not self.ifDeviceIDExists(objectID):
                 return
-            self.logger.info("delete deviceID %s"%(objectID))
+            LOG.info("delete deviceID %s"%(objectID))
             self.devices[objectID].delete(False)
             del self.devices[objectID]
         except coreDeviceException as e:
@@ -220,8 +220,8 @@ class device():
         try:
             defaultDeviceCFG={
                                 'device':{
-                                    'type':"defaultDevice",
-                                    'package':"hmc",
+                                    'deviceType':"defaultDevice",
+                                    'devicePackage':"hmc",
                                     'deviceID':deviceID},
                                 'channels':{}}
             
@@ -231,12 +231,12 @@ class device():
                 defaultDeviceCFG['device'].update(deviceCFG.get('device',{}))
                 defaultDeviceCFG['channels'].update(deviceCFG.get('channels',{}))
             
-            devicePackage="gateways.%s.devices.%s"%(defaultDeviceCFG['device']['package'],defaultDeviceCFG['device']['type'])
+            devicePackage="gateways.%s.devices.%s"%(defaultDeviceCFG['device']['devicePackage'],defaultDeviceCFG['device']['deviceType'])
             devicePath="%s%s"%(self.path,devicePackage.replace('.','/'))
             '''
                 check if device file exists, if not, crate a new one
             '''
-            self.__checkIfDeviceFileExists("%s.py"%(devicePath),defaultDeviceCFG['device']['type'],defaultDeviceCFG['device']['package'])
+            self.__checkIfDeviceFileExists("%s.py"%(devicePath),defaultDeviceCFG['device']['deviceType'],defaultDeviceCFG['device']['devicePackage'])
             '''
                 check if config file exists
             '''
@@ -251,11 +251,11 @@ class device():
                 self.devices[deviceID]= getattr(classModul,className)(**argumente)
                 if hasattr(classModul, '__version__'):
                     if classModul.__version__<__version__:
-                        self.logger.warning("version of %s is %s and can by to low"%(devicePackage,classModul.__version__))
+                        LOG.warning("version of %s is %s and can by to low"%(devicePackage,classModul.__version__))
                     else:
-                        self.logger.debug( "version of %s is %s"%(devicePackage,classModul.__version__))
+                        LOG.debug( "version of %s is %s"%(devicePackage,classModul.__version__))
                 else:
-                    self.logger.warning("package %s has no version Info"%(devicePackage))
+                    LOG.warning("package %s has no version Info"%(devicePackage))
             except :
                 raise coreDeviceException("can't not load package %s"%(devicePackage))
         except (coreException,coreDeviceException) as e:
@@ -266,7 +266,7 @@ class device():
     def __loadPackage(self,devicePackage):
         try:
             classModul = importlib.import_module(devicePackage)
-            self.logger.info("load pakage %s"%(devicePackage))
+            LOG.info("load pakage %s"%(devicePackage))
             return classModul
         except:
             raise coreException("can't not loadPackage %s"%(devicePackage))
@@ -297,9 +297,9 @@ class device():
                 objectID="device@%s"%(self.host)
             if self.ifonThisHost(objectID):
                 if len(self.devices)==0:
-                    self.logger.info("can't write device configuration, lenght is 0")
+                    LOG.info("can't write device configuration, lenght is 0")
                     return
-                self.logger.info("save device file %s"%(fileNameABS))
+                LOG.info("save device file %s"%(fileNameABS))
                 devices={}
                 for deviceID in self.getAllDeviceID():
                     devices[deviceID]=self.devices[deviceID].getConfiguration()
@@ -331,17 +331,17 @@ class device():
             if self.ifonThisHost(objectID):
                 if not self.ifFileExists(fileNameABS):
                         raise coreDeviceException("file %s not found"%(fileNameABS))
-                self.logger.info("load device file %s"%(fileNameABS))
+                LOG.info("load device file %s"%(fileNameABS))
                 deviceCFG=self.loadJSON(fileNameABS=fileNameABS)
                 if len(deviceCFG)==0:
-                    self.logger.info("device file is empty")
+                    LOG.info("device file is empty")
                     return
                 for deviceID in deviceCFG:
                     try:
                         deviceIDCFG=deviceCFG[deviceID]
                         self.restoreDevice(deviceID,deviceIDCFG)
                     except:
-                        self.logger.critical("unkown error:can't restore deviceID: %s"(deviceID)) 
+                        LOG.critical("unkown error:can't restore deviceID: %s"(deviceID)) 
             else:
                 forceUpdate=True
                 self.updateRemoteCore(forceUpdate,objectID,'loadDeviceConfiguration',objectID,fileNameABS)
@@ -358,6 +358,9 @@ class device():
             pythonFile.write("\'\'\'\nCreated on %s\n"%(time.strftime("%d.%m.%Y")))
             pythonFile.write("@author: %s\n\n"%(__author__))
             pythonFile.write("\'\'\'\n")
+            pythonFile.write("\n")
+            pythonFile.write("# Standard library imports\n")
+            pythonFile.write("import logging\n")
             pythonFile.write("# Local application imports\n")
             pythonFile.write("from gateways.hmc.devices.masterDevice import masterDevice\n\n")
             pythonFile.write("__version__=\"%s\"\n"%(__version__))
@@ -365,13 +368,15 @@ class device():
             pythonFile.write("__DEVICENTYPE__=\"%s\"\n"%(deviceType))
             pythonFile.write("__DEVICEPACKAGE__=\"%s\"\n"%(devicePackage))
             pythonFile.write("\n")
+            pythonFile.write("LOG=logging.getLogger(__name__)\n")
+            pythonFile.write("\n")
             pythonFile.write("class deviceManager(masterDevice):\n")
             pythonFile.write("    def __init__(self,deviceID,core,deviceCFG={},restore=False):\n")
             pythonFile.write("        deviceConfig=deviceCFG\n")
-            pythonFile.write("        deviceConfig['device']['package']=\"%s\"\n"%(devicePackage))
-            pythonFile.write("        deviceConfig['device']['type']=\"%s\"\n"%(deviceType))
+            pythonFile.write("        deviceConfig['devicePackage']=__DEVICEPACKAGE__\n")
+            pythonFile.write("        deviceConfig['deviceType']=__DEVICENTYPE__\n")
             pythonFile.write("        masterDevice.__init__(self, deviceID, core, deviceConfig,restore)\n")
-            pythonFile.write('        self.logger.info("init device type %s finish(%s)"%(__DEVICENTYPE__,self.deviceID))')
+            pythonFile.write('        LOG.info("init deviceID:%s type:%s version:%s"%(self.deviceID,__DEVICENTYPE__,__version__))')
             pythonFile.close()
             py_compile.compile(os.path.normpath(devicefileName))
         except:

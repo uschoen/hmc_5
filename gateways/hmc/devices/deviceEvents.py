@@ -4,7 +4,7 @@ Created on 01.12.2018
 @author: uschoen
 '''
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
@@ -54,7 +54,7 @@ class deviceEvents():
                 'module':[]
                 }
             }          
-        LOG.debug("init deviceEvents finish(%s)"%(self.deviceID))
+        LOG.info("init deviceEvents deviceID:%s version:%s"%(self.deviceID,__version__))
         
     def getEventParameters(self,event):
         '''

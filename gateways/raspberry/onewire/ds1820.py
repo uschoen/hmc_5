@@ -88,8 +88,7 @@ class ds1820(defaultGateway):
                                         break
                                     self.__readSensors(sensorID)
                                 except:
-                                    self.__connectedSensors[sensorID]["connected"]=False
-                                    LOG.error("can not read/update sensorID %s, disable sensor"%(sensorID))
+                                    pass
                             self.__LastReadSenors=int(time.time())+self.config.get("interval",360)
                     time.sleep(0.5)
                 except:

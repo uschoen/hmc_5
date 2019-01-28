@@ -1,0 +1,59 @@
+{
+    "channels": {
+        "rssi": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1548658955
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1548658955
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1548658955
+                }
+            },
+            "name": "RSSI",
+            "value": ""
+        },
+        "value": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1548658955
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1548658955
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1548658955
+                }
+            },
+            "fs20ID": "1B1B04",
+            "name": "1B1B04",
+            "value": ""
+        }
+    }
+}

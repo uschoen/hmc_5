@@ -5,15 +5,18 @@ Created on 01.12.2018
 '''
 
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 __DEVICETYPE__="defaultDevice"
 __DEVICEPACKAGE__="hmc"
 
 # Standard library imports
 import copy
+import logging
 # Local application imports
 from .deviceException import deviceParameterException
+
+LOG=logging.getLogger(__name__)
 
 class deviceParameter():
 
@@ -24,8 +27,8 @@ class deviceParameter():
         self.device={
                         'enable':True,
                         'name':self.deviceID,
-                        'type':__DEVICETYPE__,
-                        'package':__DEVICEPACKAGE__,
+                        'deviceType':__DEVICETYPE__,
+                        'devicePackage':__DEVICEPACKAGE__,
                         'events':{}
                       }
         
@@ -34,7 +37,7 @@ class deviceParameter():
         except:
             self.__defaultDeviceEvents={}
             
-        self.logger.debug("init deviceParameter finish(%s)"%(self.deviceID))
+        LOG.info("init deviceParameter deviceID:%s version:%s"%(self.deviceID,__version__))
     
     def updateDeviceParameter(self,deviceCFG={}):
         '''
@@ -49,7 +52,7 @@ class deviceParameter():
             self.device.update(deviceCFG)
             self.device['events']=defaultEvents
         except:
-            self.logger.error("can't update device parameter,use defaults",exc_info=True)
+            LOG.error("can't update device parameter,use defaults",exc_info=True)
     
     def getAllDeviceAttribute(self):
         '''
@@ -96,7 +99,7 @@ class deviceParameter():
         delete function of the device
         '''
         try:
-            self.logger.info("delete device %s"%(self.deviceID))    
+            LOG.info("delete device %s"%(self.deviceID))    
             if callEvents:
                 self.eventAction("ondelete",'device') 
         except:

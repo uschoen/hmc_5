@@ -1,0 +1,18 @@
+{
+    "cul@rasp-hmc": {
+        "class": "server",
+        "config": {
+            "baudrate": "9600",
+            "blockTime": 60,
+            "enable": true,
+            "gateway": "cul.rasp-hmc",
+            "name": "cul@rasp-hmc",
+            "package": "cul",
+            "timeout": 1,
+            "usbport": "/dev/ttyACM0"
+        },
+        "enable": true,
+        "modul": "cul",
+        "package": "cul"
+    }
+}

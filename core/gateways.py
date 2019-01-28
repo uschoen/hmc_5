@@ -341,8 +341,6 @@ class gateways():
             gatewayCFG['config']['package']=gatewayCFG['package']
             gatewayCFG['config']['name']=objectID
             gatewayCFG['config']['enable']=gatewayCFG['enable']
-            gatewayCFG['config']['devicePackage']=gatewayConfig.get('config',{}).get('devicePackage',"hmc")
-            gatewayCFG['config']['deviceType']=gatewayConfig.get('config',{}).get('deviceType',"defaultDevice")
             
             ''' gateway container '''
             self.gateways[objectID]={

@@ -5,13 +5,16 @@ Created on 01.12.2018
 '''
 
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
 import copy
+import logging
 # Local apllication constant
 from .hmcException import coreChannelException,coreDeviceException
+
+LOG=logging.getLogger(__name__)
 
 class channels():
     '''
@@ -21,7 +24,7 @@ class channels():
         '''
         core channels
         '''
-        self.logger.info("load core.channels modul")
+        LOG.info("load core.channels modul")
     
     def setDeviceChannelValue(self,deviceID,channelName,value,forceUpdate=False):
         '''
