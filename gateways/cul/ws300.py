@@ -3,13 +3,13 @@ Created on 23.12.2017
 
 @author: uschoen
 '''
+import core
 __verion__=5.1
 
 # Standard library imports
 import logging
 
 # Local application imports
-from core.hmcException import gatewayException
 
 LOG=logging.getLogger(__name__)
 LOG=logging.getLogger(__name__)
@@ -22,6 +22,9 @@ class ws300device(object):
     classdocs
     
     '''
+    def __init__(self):
+        LOG.debug("ws300device init")
+        
     def decodeWs300weather(self,msg):
         try:
             LOG.debug("weather decode: %s length %i" %(msg,len(msg)))
@@ -46,7 +49,7 @@ class ws300device(object):
             else:
                 LOG.info("typ is unknown:%s length %i"%(split_msg[1],len(msg)))
         except:
-            LOG.error("can not decode weather data")
+            LOG.error("can not decode weather data",exc_info=True)
     
     def __ks300Device(self,msg):
         LOG.debug("ks300 get code %s"%(msg))

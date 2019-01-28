@@ -21,11 +21,12 @@ class fs20device(object):
     classdocs
     
     '''
+    def __init__(self):
+        LOG.debug("cul fs20 devices init")
+        
     def decodeFS20(self,msg):
-        LOG.debug("fs20 get code %s"%(msg))
-        #channelNameDevice="value"
-        #channelNameRSSI='rssi'
         try:
+            LOG.debug("fs20 get code %s"%(msg))
             FS20ID="%s"%(msg[0:6])
             deviceID="%s@%s"%(msg[0:6],self.config['gateway'])
             rssi=self.calcRssi(int(msg[8:9],16))

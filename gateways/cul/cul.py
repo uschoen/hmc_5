@@ -26,7 +26,10 @@ LOG=logging.getLogger(__name__)
 LINEFEED=b'\r\n'
 
 
-class server(defaultGateway):
+class server(defaultGateway,
+             fs20device,
+             ws300device
+             ):
     '''
     classdocs
     '''
@@ -56,8 +59,8 @@ class server(defaultGateway):
         ''' cul devices '''
         self.__culDevices={
             '21':self.__getBudget,
-            'F':fs20device.decodeFS20,
-            'K':ws300device.decodeWs300weather
+            'F':self.decodeFS20,
+            'K':self.decodeWs300weather
             }
         
         ''' send budget '''
@@ -95,10 +98,10 @@ class server(defaultGateway):
                     if not data=="":
                         LOG.debug("get message from cul:%s"%(data))
                         if data[:2] in self.__culDevices:
-                            self.__culDevices[data[:2]](self,data[2:])
+                            self.__culDevices[data[:2]](data[2:])
                             continue
                         if data[:1] in self.__culDevices:
-                            self.__culDevices[data[:1]](self,data[1:])
+                            self.__culDevices[data[:1]](data[1:])
                             continue
                         LOG.warning("unkoen meassges from CUL %s"%(data))
                     time.sleep(0.1)
@@ -203,7 +206,7 @@ class server(defaultGateway):
         exception will be raise
         '''
         try:
-            LOG.info("read version")
+            LOG.debug("read hardware version")
             self.__sendCommand(b'VH')
             time.sleep(0.1)
             culHWVersion=self.__readResult()
@@ -255,7 +258,7 @@ class server(defaultGateway):
         '''
         
         try:
-            LOG.info("read version")
+            LOG.debug("read software version")
             self.__sendCommand(b'V')
             time.sleep(0.1)
             culVersion=self.__readResult()
