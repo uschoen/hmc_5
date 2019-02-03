@@ -108,6 +108,384 @@
             "name": "2:actual_temperature",
             "value": ""
         },
+        "2:battery_state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:battery_state",
+            "value": ""
+        },
+        "2:boost_state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:boost_state",
+            "value": ""
+        },
+        "2:communication_reporting": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:communication_reporting",
+            "value": ""
+        },
+        "2:control_mode": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:control_mode",
+            "value": ""
+        },
+        "2:lowbat_reporting": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:lowbat_reporting",
+            "value": ""
+        },
+        "2:party_start_day": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_start_day",
+            "value": ""
+        },
+        "2:party_start_month": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_start_month",
+            "value": ""
+        },
+        "2:party_start_time": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_start_time",
+            "value": ""
+        },
+        "2:party_start_year": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_start_year",
+            "value": ""
+        },
+        "2:party_stop_day": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_stop_day",
+            "value": ""
+        },
+        "2:party_stop_month": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_stop_month",
+            "value": ""
+        },
+        "2:party_stop_time": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_stop_time",
+            "value": ""
+        },
+        "2:party_stop_year": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_stop_year",
+            "value": ""
+        },
+        "2:party_temperature": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:party_temperature",
+            "value": ""
+        },
         "2:set_temperature": {
             "enable": true,
             "events": {
@@ -133,6 +511,33 @@
                 }
             },
             "name": "2:set_temperature",
+            "value": ""
+        },
+        "2:window_open_reporting": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549222853
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549222853
+                }
+            },
+            "name": "2:window_open_reporting",
             "value": ""
         }
     }
