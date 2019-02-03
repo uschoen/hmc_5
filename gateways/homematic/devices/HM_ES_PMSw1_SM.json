@@ -1,96 +1,15 @@
 {
     "channels": {
-        "0:sticky_unreach": {
-            "enable": true,
-            "events": {
-                "onchange": {
-                    "module": [],
-                    "timestamp": 1548362577
-                },
-                "oncreate": {
-                    "module": [],
-                    "timestamp": 1548362577
-                },
-                "oncreatechannel": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "ondelete": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "onrefresh": {
-                    "module": [],
-                    "timestamp": 1548362577
-                }
-            },
-            "name": "0:sticky_unreach",
-            "value": ""
-        },
-        "1:state": {
-            "enable": true,
-            "events": {
-                "onchange": {
-                    "module": [],
-                    "timestamp": 1547919585
-                },
-                "oncreate": {
-                    "module": [],
-                    "timestamp": 1547919585
-                },
-                "oncreatechannel": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "ondelete": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "onrefresh": {
-                    "module": [],
-                    "timestamp": 1547919585
-                }
-            },
-            "name": "1:state",
-            "value": ""
-        },
-        "1:working": {
-            "enable": true,
-            "events": {
-                "onchange": {
-                    "module": [],
-                    "timestamp": 1547919585
-                },
-                "oncreate": {
-                    "module": [],
-                    "timestamp": 1547919585
-                },
-                "oncreatechannel": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "ondelete": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "onrefresh": {
-                    "module": [],
-                    "timestamp": 1547919585
-                }
-            },
-            "name": "1:working",
-            "value": ""
-        },
         "2:boot": {
             "enable": true,
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -102,7 +21,7 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 }
             },
             "name": "2:boot",
@@ -113,11 +32,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -129,7 +48,7 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 }
             },
             "name": "2:current",
@@ -140,11 +59,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -156,7 +75,7 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 }
             },
             "name": "2:energy_counter",
@@ -167,11 +86,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -183,7 +102,7 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 }
             },
             "name": "2:frequency",
@@ -194,11 +113,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -210,7 +129,7 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 }
             },
             "name": "2:power",
@@ -221,11 +140,11 @@
             "events": {
                 "onchange": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreate": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 },
                 "oncreatechannel": {
                     "module": [],
@@ -237,7 +156,7 @@
                 },
                 "onrefresh": {
                     "module": [],
-                    "timestamp": 1547919585
+                    "timestamp": 1549222854
                 }
             },
             "name": "2:voltage",
