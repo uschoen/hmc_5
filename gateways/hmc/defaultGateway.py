@@ -48,7 +48,7 @@ class defaultGateway(threading.Thread):
                     "deviceID":deviceID,
                     "enable":True,
                     "name":deviceID,
-                    'deviceTyp':"defaultDevice",
+                    'deviceType':"defaultDevice",
                     'devicePackage':"hmc"
                    }
         return config
