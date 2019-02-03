@@ -5,7 +5,7 @@ Created on 02.12.2018
 '''
 import logging
 # Local application imports
-from masterDevice import masterDevice
+from gateways.hmc.devices.masterDevice import masterDevice
 
 
 __version__="5.1"
@@ -21,5 +21,5 @@ class deviceManager(masterDevice):
         deviceConfig=deviceCFG
         deviceConfig['devicePackage']=__DEVICEPACKAGE__
         deviceConfig['deviceType']=__DEVICENTYPE__
-        masterDevice.__init__(self, deviceID, core, deviceConfig, restore)
+        masterDevice.__init__(self, deviceID, core, deviceConfig,restore)
         LOG.info("init deviceID:%s type:%s version:%s"%(self.deviceID,__DEVICENTYPE__,__version__))
