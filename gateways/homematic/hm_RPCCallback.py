@@ -128,8 +128,8 @@ class hmcRPCcallback:
                     "gateway":"%s"%(self.config['gateway']),
                     "deviceID":"%s"%(deviceID),
                     "enable":True,
-                    "type":"%s"%(devicetype),
-                    "package":self.config['devicePackage'],
+                    "deviceType":"%s"%(devicetype),
+                    "devicePackage":self.config['devicePackage'],
                     }
             self.core.addDevice(deviceID,deviceCFG)
         except:
