@@ -71,19 +71,6 @@ class configuration():
                 except:
                     self.logger.error("can't load remote core file %s"%(fileNameABS),exc_info=True)
                 '''
-                module
-                '''
-                try:
-                    objectID="module@%s"%(self.host)
-                    fileNameABS="%s/%s"%(path,self.args['configuration']['files']['module'])
-                    if not self.ifFileExists(fileNameABS):
-                        if not self.ifPathExists(path):
-                            self.makeDir(path)
-                        self.writeJSON(fileNameABS)
-                    self.loadModuleConfiguration(objectID,fileNameABS)
-                except:
-                    self.logger.error("can't load module file %s"%(fileNameABS))
-                '''
                 devices
                 '''
                 try:
@@ -96,6 +83,19 @@ class configuration():
                     self.loadDeviceConfiguration(objectID,fileNameABS)
                 except:
                     self.logger.error("can't load device file %s"%(fileNameABS),exc_info=True)
+                '''
+                module
+                '''
+                try:
+                    objectID="module@%s"%(self.host)
+                    fileNameABS="%s/%s"%(path,self.args['configuration']['files']['module'])
+                    if not self.ifFileExists(fileNameABS):
+                        if not self.ifPathExists(path):
+                            self.makeDir(path)
+                        self.writeJSON(fileNameABS)
+                    self.loadModuleConfiguration(objectID,fileNameABS)
+                except:
+                    self.logger.error("can't load module file %s"%(fileNameABS))
                 '''
                 gateway
                 '''
