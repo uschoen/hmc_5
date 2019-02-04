@@ -51,19 +51,19 @@ class ds1820(defaultGateway):
         
         LOG.info("build ds1820 gateway, %s instance"%(__name__))
     
-    def defaultDeviceConfig(self,sensorID):
+    def __defaultDeviceConfig(self,sensorID):
         '''
         give the default parameter for a device ID back
         '''
         config={
                 'name':sensorID,
                 'deviceID':self.__deviceID(sensorID),
-                'type':self.config['deviceType'],
-                'package':self.config['devicePackage']
+                'deviceType':self.config['deviceType'],
+                'devicePackage':self.config['devicePackage']
                }
         return config 
     
-    def defaultChannelConfig(self,sensorID):
+    def __defaultChannelConfig(self,sensorID):
         config={
                 'name':sensorID,
                 'value':0
@@ -214,10 +214,11 @@ class ds1820(defaultGateway):
         add a new channel with name temperature
         '''
         try:
+            channelName="temperature"
             deviceID=self.__deviceID(sensorID)
-            channelCFG=self.defaultChannelConfig(sensorID=sensorID)
-            self.addNewDeviceChannel(deviceID,"temperature",channelCFG)
-            LOG.debug("add new channel %s to deviceID %s"%("temperature",deviceID))
+            channelCFG=self.__defaultChannelConfig(sensorID)
+            self.core.addDeviceChannel(deviceID,channelName,channelCFG) 
+            LOG.debug("add new channel %s to deviceID %s"%(channelName,deviceID))
         except:
             self.__connectedSensors[sensorID]={
                                                 "connected":False
@@ -230,8 +231,8 @@ class ds1820(defaultGateway):
         add a new sensor to core core devices
         '''
         try:
-            deviceConfig=self.defaultDeviceConfig(sensorID)
-            self.addNewDevice(self.__deviceID(sensorID),deviceConfig)
+            deviceCFG=self.__defaultDeviceConfig(sensorID)
+            self.core.addDevice(self.__deviceID(sensorID),deviceCFG)
             LOG.debug("add new sensorID %s with deviceID %s and type %s"%(sensorID,self.__deviceID(sensorID),self.config['deviceType']))
             self.__connectedSensors[sensorID]={
                                                 "connected":True
