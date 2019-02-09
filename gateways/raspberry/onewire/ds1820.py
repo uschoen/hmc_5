@@ -113,7 +113,8 @@ class ds1820(defaultGateway):
             check if sensor in core exists
             '''
             if not self.core.ifDeviceIDExists(deviceID):
-                self.__addNewSensor(sensorID)
+                print (deviceID)
+                self.__addNewDevice(sensorID)
             '''
             check if sensor enable in core
             '''
@@ -198,7 +199,8 @@ class ds1820(defaultGateway):
                     self.__connectedSensors[sensorID]["connected"]=True
                 else:
                     try:
-                        self.__addNewDevice(sensorID)
+                        if not self.core.ifDeviceIDExists(self.__deviceID(sensorID)):
+                            self.__addNewDevice(sensorID)
                     except:
                         LOG.error("can not add new sensorID %s"%(sensorID),exc_info=True)
             self.__deleteDisconectedSensors()
