@@ -63,7 +63,7 @@ class defaults():
                     "filename": "%s/log/%s_warning.log"%(os.path.abspath(os.path.dirname(sys.argv[0])),self.host),
                     "formatter": "simple",
                     "level": "ERROR",
-                    "maxBytes": 12000,
+                    "maxBytes": 1200000,
                     "mode": "a"
                 }
             },
