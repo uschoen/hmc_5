@@ -1,31 +1,3 @@
 {
-    "channels": {
-        "21:value": {
-            "enable": true,
-            "events": {
-                "onchange": {
-                    "module": [],
-                    "timestamp": 1549222853
-                },
-                "oncreate": {
-                    "module": [],
-                    "timestamp": 1549222853
-                },
-                "oncreatechannel": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "ondelete": {
-                    "module": [],
-                    "timestamp": 0
-                },
-                "onrefresh": {
-                    "module": [],
-                    "timestamp": 1549222853
-                }
-            },
-            "name": "21:value",
-            "value": ""
-        }
-    }
+    "channels": {}
 }

@@ -64,7 +64,11 @@ class hmcRPCcallback:
                 LOG.error("get deviceNumber:%s channelName:%s value:%s unkown:%s"%(deviceNumber,channelName,value,unkown))
                 return''
             if not self.core.ifDeviceChannelExist(deviceID,channelName):
-                self.core.addDeviceChannel(deviceID,channelName)
+                channelCFG={
+                     'name':channelName,
+                     'value':0
+                    }
+                self.core.addDeviceChannel(deviceID,channelName,channelCFG)
             self.core.setDeviceChannelValue(deviceID,channelName,value)
             return ''
         except:
