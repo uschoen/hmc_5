@@ -5,7 +5,7 @@ Created on 01.12.2018
 '''
 
 
-__version__='5.0'
+__version__='5.1'
 __author__ = 'ullrich schoen'
 
 # Standard library imports
@@ -40,7 +40,7 @@ class hmcRPCcallback:
         ''' reset timer function '''
         self.__resetTimer=resetTimer
 
-        LOG.debug("init new hmcRPCcallback")
+        LOG.debug("init new hmcRPCcallback version %s"%(__version__))
         
     def event(self,interfaceID,deviceNumber,channelName,value,*unkown):
         if DEBUG:

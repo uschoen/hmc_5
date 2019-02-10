@@ -54,6 +54,7 @@ class server(defaultGateway):
         #"iseID_rf":"1012",
         ''' rpc server intance '''
         self.__rpcServer=False
+        self.rpcServerINST=False
         
         ''' block time for rpc server'''
         self.__blockTime=0
@@ -72,11 +73,12 @@ class server(defaultGateway):
             hmIP=self.config['hm_ip']
             hmPort=self.config['hm_port']
             interfaceID=self.config['hm_interface_id']
-            self.__resetTimer()
+            self.__resetHmMessagesTimer()
+            self.__resetRestartXMLTimer()
             while self.running:
                 try:
                     if self.__blockTime<int(time.time()):
-                        if self.__buildRPCServer(rpcIp,rpcPort,self.name):
+                        if self.__buildRPCServer(rpcIp,rpcPort,self.config['name']):
                             self.__requestRpcMsg(rpcIp, rpcPort, hmIP, hmPort, interfaceID)
                         if self.__timerRestartXML<int(time.time()):
                             raise gatewayException("timeout-2 restart server",False)
@@ -85,27 +87,35 @@ class server(defaultGateway):
                             self.__sendXMLCMD(self.config['HomeMaticURL'],self.config['iseID'],self.config['iseIDValue'])  
                     time.sleep(0.1) 
                 except:
-                    LOG.error("error in rpc server",exc_info=True)  
+                    LOG.error("error in rpc server %s"%(self.config['name']))  
                     self.__blockServer() 
-                    self.__stopRpcMSG(rpcIp, rpcPort, hmIP, hmPort)
-                    self.__rpcServer=False
-            LOG.critical("%s normally stop:"%(__name__))
-            self.__stopRpcMSG(rpcIp, rpcPort, hmIP, hmPort)
+                    self.__stopRpcMSG(self.config['rpc_ip'], self.config['rpc_port'], self.config['hm_ip'], self.config['hm_port'])
+                    self.__stopRPCServer()
+            LOG.critical("RPC server normally stop:%s"%(self.config['name']))  
         except:
-            LOG.critical("%s have a problem and stop"%(__name__),exc_info=True)
+            LOG.critical("%s have a problem and stop"%(self.config['name']),exc_info=True)
     
     def shutdown(self):
         try:
-            LOG.critical("%s gateway shutdown"%(self.name))
+            LOG.critical("%s gateway shutdown"%(self.config['name']))
             self.__stopRpcMSG(self.config['rpc_ip'], self.config['rpc_port'], self.config['hm_ip'], self.config['hm_port'])
+            self.__stopRPCServer()
             self.running=False
         except:
             pass
-          
-    def __resetTimer(self):
+    
+    def __resetAllTimer(self):
+        self.__resetHmMessagesTimer()
+        self.__resetRestartXMLTimer()
+        
+    def __resetHmMessagesTimer(self):
         ''' reset timer '''
-        #LOG.debug("reset MSG timeout for gateway %s"%(self.name))
+        #LOG.debug("reset MSG timeout for gateway %s"%(self.config['name']))
         self.__timerHmWakeUP=self.config['MSGtimeout']+int(time.time()) 
+    
+    def __resetRestartXMLTimer(self):
+        ''' reset timer '''
+        #LOG.debug("reset MSG timeout for gateway %s"%(self.config['name']))
         self.__timerRestartXML=self.config['MSGtimeout']+int(time.time())+5
     
     def __requestRpcMsg(self,rpcIp,rpcPort,hmIP,hmPort,interfaceID):
@@ -125,7 +135,7 @@ class server(defaultGateway):
             LOG.error("INIT request Fault string: %s" % err.faultString)
             raise gatewayException("some error in INIT Request")
         except:
-            raise gatewayException("can't send a INIT request %s"%(self.name))
+            raise gatewayException("can't send a INIT request %s"%(self.config['name']))
     
     def __stopRpcMSG(self,rpcIp,rpcPort,hmIP,hmPort):
         try:
@@ -135,7 +145,7 @@ class server(defaultGateway):
         except xmlrpc.client.Fault as err:
             LOG.error("INIT Request Fault code: %d" % err.faultCode)
             LOG.error("INIT request Fault string: %s" % err.faultString)
-            raise gatewayException("some error in INIT Request %s"%(self.name))
+            raise gatewayException("some error in INIT Request %s"%(self.config['name']))
         except:
             LOG.error("can't send a stop INIT request",exc_info=True)   
     
@@ -145,7 +155,7 @@ class server(defaultGateway):
         '''
         try:
             url=("%s?ise_id=%s&new_value=%s"%(hmURL,iseID,iseValue))
-            LOG.info("send messages to homematic %s to wake up for gateway %s"%(url,self.name))
+            LOG.info("send messages to homematic %s to wake up for gateway %s"%(url,self.config['name']))
             http = urllib3.PoolManager()
             response = http.request('GET', url)
             LOG.debug("http response code %s:"%(response.data))
@@ -160,6 +170,7 @@ class server(defaultGateway):
                     raise gatewayException("get some unkown answer %s"%(response.data),False)
             else:
                 raise gatewayException("get some unkown answer %s"%(response.data),False)
+            self.__resetHmMessagesTimer()
         except (gatewayException) as e:
             raise e 
         except :
@@ -177,27 +188,39 @@ class server(defaultGateway):
                 else:
                     ''' server is exciting but not running '''
                     LOG.warning("RPC Server %s:%s is stop,starting new server %s"%(ip,port,name))
-                    self.__rpcServer=False
+                    self.__stopRpcMSG(self.config['rpc_ip'], self.config['rpc_port'], self.config['hm_ip'], self.config['hm_port'])
+                    self.__stopRPCServer()
             LOG.info("RPC Server %s %s:%s start"%(name,ip,port))
-            server = SimpleXMLRPCServer((ip,int(port)))
-            server.logRequests=False
-            server.register_introspection_functions() 
-            server.register_multicall_functions() 
-            server.register_instance(hmcRPCcallback(self.config,self.core,self.__resetTimer))
-            self.__rpcServer = threading.Thread(target=server.serve_forever)
+            self.rpcServerINST = SimpleXMLRPCServer((ip,int(port)))
+            self.rpcServerINST.logRequests=False
+            self.rpcServerINST.register_introspection_functions() 
+            self.rpcServerINST.register_multicall_functions() 
+            self.rpcServerINST.register_instance(hmcRPCcallback(self.config,self.core,self.__resetAllTimer))
+            self.__rpcServer = threading.Thread(target=self.rpcServerINST.serve_forever)
             self.__rpcServer.start()
+            self.__resetAllTimer()
             LOG.info("RPC Server %s is start"%(name))
             return True
         except:
             raise gatewayException("can't start rpc server %"%(name))
     
+    def __stopRPCServer(self):
+        try:
+            LOG.warning("stop RPC Server %s"%(self.config['name']))
+            if self.__rpcServer:
+                self.rpcServerINST.server_close()
+            self.rpcServerINST=False
+            self.__rpcServer=False
+        except:
+            LOG.error("can't stop RPC server %s"%(self.config['name']))
+            
     def __blockServer(self):
         '''
         block the server for new connections
         '''
         try:
-            LOG.error("block server %s for %s sec"%(self.name,self.config['blockRPCServer']))
+            LOG.error("block server %s for %s sec"%(self.config['name'],self.config['blockRPCServer']))
             self.__blockTime=self.config['blockRPCServer']+int(time.time())
         except:
-            raise gatewayException("some unkown error in block server %s"%(self.name))
+            raise gatewayException("some unkown error in block server %s"%(self.config['name']))
             
