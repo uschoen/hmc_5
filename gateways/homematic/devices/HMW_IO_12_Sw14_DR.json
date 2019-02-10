@@ -1,3 +1,58 @@
 {
-    "channels": {}
+    "channels": {
+        "1:state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549784643
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549784643
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549784643
+                }
+            },
+            "name": "1:state",
+            "value": 0
+        },
+        "2:state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549784643
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549784643
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549784643
+                }
+            },
+            "name": "2:state",
+            "value": 0
+        }
+    }
 }

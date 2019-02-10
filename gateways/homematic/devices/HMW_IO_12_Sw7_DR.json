@@ -1,3 +1,58 @@
 {
-    "channels": {}
+    "channels": {
+        "1:press_long": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549784642
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549784642
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549784642
+                }
+            },
+            "name": "1:press_long",
+            "value": 0
+        },
+        "1:press_short": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549784642
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549784642
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549784642
+                }
+            },
+            "name": "1:press_short",
+            "value": 0
+        }
+    }
 }

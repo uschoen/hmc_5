@@ -1,0 +1,166 @@
+{
+    "channels": {
+        "humidity": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549783749
+                }
+            },
+            "name": "humidity",
+            "value": ""
+        },
+        "rain": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549783749
+                }
+            },
+            "name": "rain",
+            "value": ""
+        },
+        "rssi": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549783749
+                }
+            },
+            "name": "rssi",
+            "value": ""
+        },
+        "temperature": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549783749
+                }
+            },
+            "name": "temperature",
+            "value": ""
+        },
+        "wind": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549783749
+                }
+            },
+            "name": "wind",
+            "value": ""
+        },
+        "windchill": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549783749
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549783749
+                }
+            },
+            "name": "windchill",
+            "value": ""
+        }
+    }
+}
