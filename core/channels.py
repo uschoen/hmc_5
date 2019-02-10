@@ -13,6 +13,7 @@ import copy
 import logging
 # Local apllication constant
 from .hmcException import coreChannelException,coreDeviceException
+from gateways.hmc.devices.deviceException import deviceChannelException
 
 LOG=logging.getLogger(__name__)
 
@@ -104,7 +105,7 @@ class channels():
             channelValuesCP=copy.deepcopy(channelCFG)
             self.devices[deviceID].addChannel(channelName,channelValuesCP)
             self.updateRemoteCore(forceUpdate,deviceID,'addDeviceChannel',deviceID,channelName,channelValuesCP)
-        except coreDeviceException as e:
+        except (coreDeviceException,deviceChannelException) as e:
             raise e
         except:
             raise coreChannelException("can not add channel %s for deviceID %s values %s"%(channelName,deviceID,channelCFG))

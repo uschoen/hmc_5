@@ -12,7 +12,6 @@ import logging
 # Local application imports
 
 LOG=logging.getLogger(__name__)
-LOG=logging.getLogger(__name__)
 WETHERDEVICE="wetter"
 NAMEDEVICERSSI="rssi"
 
