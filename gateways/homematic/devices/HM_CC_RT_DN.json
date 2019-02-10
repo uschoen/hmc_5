@@ -1,3 +1,436 @@
 {
-    "channels": {}
+    "channels": {
+        "4:actual_temperature": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:actual_temperature",
+            "value": 0
+        },
+        "4:battery_state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:battery_state",
+            "value": 0
+        },
+        "4:boost_state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:boost_state",
+            "value": 0
+        },
+        "4:control_mode": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:control_mode",
+            "value": 0
+        },
+        "4:fault_reporting": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:fault_reporting",
+            "value": 0
+        },
+        "4:party_start_day": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_start_day",
+            "value": 0
+        },
+        "4:party_start_month": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_start_month",
+            "value": 0
+        },
+        "4:party_start_time": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_start_time",
+            "value": 0
+        },
+        "4:party_start_year": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_start_year",
+            "value": 0
+        },
+        "4:party_stop_day": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_stop_day",
+            "value": 0
+        },
+        "4:party_stop_month": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_stop_month",
+            "value": 0
+        },
+        "4:party_stop_time": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_stop_time",
+            "value": 0
+        },
+        "4:party_stop_year": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_stop_year",
+            "value": 0
+        },
+        "4:party_temperature": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:party_temperature",
+            "value": 0
+        },
+        "4:set_temperature": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:set_temperature",
+            "value": 0
+        },
+        "4:valve_state": {
+            "enable": true,
+            "events": {
+                "onchange": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreate": {
+                    "module": [],
+                    "timestamp": 1549797205
+                },
+                "oncreatechannel": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "ondelete": {
+                    "module": [],
+                    "timestamp": 0
+                },
+                "onrefresh": {
+                    "module": [],
+                    "timestamp": 1549797205
+                }
+            },
+            "name": "4:valve_state",
+            "value": 0
+        }
+    }
 }
